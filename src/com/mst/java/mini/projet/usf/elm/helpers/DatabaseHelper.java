@@ -16,7 +16,6 @@ public class DatabaseHelper{
         try{
             Class.forName("com.mysql.jdbc.Driver");
             con= DriverManager.getConnection("jdbc:mysql://localhost:3306/examen_java_lp_bd","root","");
-            //here sonoo is database name, root is username and password
 
             if (con!=null){
                 System.out.println("connection passed !!");

@@ -71,4 +71,18 @@ public class DatabaseConfigModel {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'';
     }
+
+
+    public String toJson() {
+        return "{"+
+                "serverAdr:"+serverAdr+
+                ",databaseName:"+databaseName+
+                ",tableName:"+tableName+
+                ",username:"+username+
+                ",password:"+password
+                +"}";
+    }
+    public void fromJson(String json){
+
+    }
 }

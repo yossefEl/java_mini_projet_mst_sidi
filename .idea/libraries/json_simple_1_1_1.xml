@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="mysql-connector">
+  <library name="json-simple-1.1.1">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Desktop/mysql-connector.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/json-simple-1.1.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
