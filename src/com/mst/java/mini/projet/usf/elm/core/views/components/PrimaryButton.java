@@ -5,17 +5,16 @@ import com.mst.java.mini.projet.usf.elm.helpers.AppColors;
 import javax.swing.JButton;
 import java.awt.*;
 
-public class PrimaryButton {
-    public JButton button;
+public class PrimaryButton extends JButton{
+
 
     public PrimaryButton() {
-        JButton btn = new JButton();
-        btn.setBorderPainted(false);
-        btn.setOpaque(true);
-        btn.setBackground(Color.BLACK);
-        btn.setForeground(Color.BLUE);
-        btn.setVisible(true);
-        button = btn;
+        super("Text");
+        setSize(100,20);
+        setBorderPainted(false);
+        setOpaque(true);
+        setBackground(Color.RED);
+
     }
 
 }
