@@ -19,7 +19,7 @@ public class LoginView extends JFrame {
 		panel2 = new JPanel();
 		label1 = new JLabel();
 		textField1 = new JTextField();
-		textField2 = new JTextField();
+		passwordField1 = new JPasswordField();
 		button1 = new JButton();
 
 		//======== this ========
@@ -31,30 +31,28 @@ public class LoginView extends JFrame {
 			panel2.setLayout(null);
 
 			//---- label1 ----
-			label1.setText("text");
 			label1.setPreferredSize(new Dimension(50, 14));
 			label1.setMinimumSize(new Dimension(50, 14));
 			label1.setHorizontalAlignment(SwingConstants.CENTER);
 			label1.setFont(label1.getFont().deriveFont(Font.BOLD, 27f));
+			label1.setIcon(new ImageIcon("C:\\Users\\hp\\IdeaProjects\\java_mini_projet_mst_sidi\\src\\com\\mst\\java\\mini\\projet\\usf\\elm\\assets\\fste_275.png"));
+			label1.setIconTextGap(0);
 			panel2.add(label1);
-			label1.setBounds(0, 0, 373, 45);
+			label1.setBounds(2, 10, 373, 215);
 
 			//---- textField1 ----
 			textField1.setHorizontalAlignment(SwingConstants.CENTER);
 			panel2.add(textField1);
-			textField1.setBounds(6, 63, 360, 30);
-
-			//---- textField2 ----
-			textField2.setHorizontalAlignment(SwingConstants.CENTER);
-			panel2.add(textField2);
-			textField2.setBounds(6, 98, 360, 30);
+			textField1.setBounds(1, 230, 375, 30);
+			panel2.add(passwordField1);
+			passwordField1.setBounds(1, 264, 375, 30);
 
 			//---- button1 ----
 			button1.setText("text");
 			button1.setBackground(new Color(0, 51, 255));
 			button1.setForeground(Color.white);
 			panel2.add(button1);
-			button1.setBounds(6, 138, 360, 30);
+			button1.setBounds(1, 305, 375, 30);
 
 			{ // compute preferred size
 				Dimension preferredSize = new Dimension();
@@ -71,7 +69,7 @@ public class LoginView extends JFrame {
 			}
 		}
 		contentPane.add(panel2);
-		panel2.setBounds(new Rectangle(new Point(211, 169), panel2.getPreferredSize()));
+		panel2.setBounds(211, 32, panel2.getPreferredSize().width, 370);
 
 		contentPane.setPreferredSize(new Dimension(815, 530));
 		pack();
@@ -83,7 +81,7 @@ public class LoginView extends JFrame {
 	private JPanel panel2;
 	private JLabel label1;
 	private JTextField textField1;
-	private JTextField textField2;
+	private JPasswordField passwordField1;
 	private JButton button1;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }

@@ -11,45 +11,50 @@ new FormModel {
 				name: "panel2"
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label1"
-					"text": "text"
 					"preferredSize": new java.awt.Dimension( 50, 14 )
 					"minimumSize": new java.awt.Dimension( 50, 14 )
 					"horizontalAlignment": 0
 					"font": new com.jformdesigner.model.SwingDerivedFont( null, 131073, 27, true )
+					"icon": new com.jformdesigner.model.SwingIcon( 1, "C:\\Users\\hp\\IdeaProjects\\java_mini_projet_mst_sidi\\src\\com\\mst\\java\\mini\\projet\\usf\\elm\\assets\\fste_275.png" )
+					"iconTextGap": 0
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"width": 373
-					"height": 45
+					"height": 215
+					"x": 2
+					"y": 10
 				} )
 				add( new FormComponent( "javax.swing.JTextField" ) {
 					name: "textField1"
 					"horizontalAlignment": 0
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"width": 360
+					"width": 375
 					"height": 30
-					"x": 6
-					"y": 63
+					"x": 1
+					"y": 230
 				} )
-				add( new FormComponent( "javax.swing.JTextField" ) {
-					name: "textField2"
-					"horizontalAlignment": 0
+				add( new FormComponent( "javax.swing.JPasswordField" ) {
+					name: "passwordField1"
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"width": 360
+					"x": 1
+					"y": 264
+					"width": 375
 					"height": 30
-					"x": 6
-					"y": 98
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "button1"
 					"text": "text"
+					"background": new java.awt.Color( 0, 51, 255, 255 )
+					"foreground": sfield java.awt.Color white
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"width": 360
+					"width": 375
 					"height": 30
-					"x": 6
-					"y": 138
+					"x": 1
+					"y": 305
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 211
-				"y": 169
+				"y": 32
+				"height": 370
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
