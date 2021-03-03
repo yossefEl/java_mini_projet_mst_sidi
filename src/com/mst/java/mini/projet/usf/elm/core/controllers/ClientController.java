@@ -1,4 +1,4 @@
 package com.mst.java.mini.projet.usf.elm.core.controllers;
 
-public class UpdateClientController {
+public class ClientController {
 }

@@ -14,6 +14,6 @@ public class AppColors {
     public static final Color black100Color =Color.black;
     public static final Color borderGreyColor =new Color(211,211,211);
     public static final Color lightGreyColor =new Color(248,249,250);
-    public static final Color sidebarGreyColor =new Color(232,232,232);
+    public static final Color darkGreyColor =new Color(232,232,232);
 
 }

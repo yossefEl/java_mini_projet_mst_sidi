@@ -1,5 +1,4 @@
 package com.mst.java.mini.projet.usf.elm.core.models;
-
 /*
  * This model is the container of database configuration
  */
@@ -73,16 +72,5 @@ public class DatabaseConfigModel {
     }
 
 
-    public String toJson() {
-        return "{"+
-                "serverAdr:"+serverAdr+
-                ",databaseName:"+databaseName+
-                ",tableName:"+tableName+
-                ",username:"+username+
-                ",password:"+password
-                +"}";
-    }
-    public void fromJson(String json){
 
-    }
 }

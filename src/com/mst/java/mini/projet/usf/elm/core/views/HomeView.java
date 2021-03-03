@@ -1,12 +1,33 @@
 package com.mst.java.mini.projet.usf.elm.core.views;
 
-import com.mst.java.mini.projet.usf.elm.core.controllers.ConfigureDatabaseController;
+import com.mst.java.mini.projet.usf.elm.core.views.components.MainDashboardContentArea;
+import com.mst.java.mini.projet.usf.elm.core.views.components.Sidebar;
+import com.mst.java.mini.projet.usf.elm.helpers.AppColors;
+
 import javax.swing.*;
 
 public class HomeView extends JFrame {
-    HomeView(){
-        final ConfigureDatabaseController configureDatabaseController=new ConfigureDatabaseController();
-        configureDatabaseController.isDatabaseConfigured();
+    Sidebar sidebar;
+    MainDashboardContentArea mainContent;
 
+    public HomeView() {
+
+        buildView();
+
+    }
+
+    private void buildView() {
+        setLayout(null);
+        setBackground(AppColors.whiteColor);
+        //init components
+        sidebar = new Sidebar();
+        mainContent=new UpdateDeleteClientView();
+
+        //composing the view
+        add(sidebar);
+        add(mainContent);
+        setLocationRelativeTo(null);
+        setSize(819, 512);
+        setVisible(true);
     }
 }
