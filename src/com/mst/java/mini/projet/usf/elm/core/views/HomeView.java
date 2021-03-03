@@ -10,6 +10,7 @@ public class HomeView extends JFrame {
     Sidebar sidebar;
     MainDashboardContentArea mainContent;
 
+
     public HomeView() {
 
         buildView();
@@ -21,7 +22,7 @@ public class HomeView extends JFrame {
         setBackground(AppColors.whiteColor);
         //init components
         sidebar = new Sidebar();
-        mainContent=new UpdateDeleteClientView();
+        mainContent=new ShowClientsView();
 
         //composing the view
         add(sidebar);
