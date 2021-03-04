@@ -6,6 +6,7 @@ package com.mst.java.mini.projet.usf.elm.helpers;
 // This why this class helper created ..it's for handling paths
 
 import javax.swing.*;
+import java.util.regex.Matcher;
 
 public class PathHelper {
     //    In case the program is running under a windows OS this will convert the path to Windows path syntax
@@ -14,7 +15,8 @@ public class PathHelper {
 
     public static String toCurrentOSPathSyntax(String unixPathSyntax) {
         if (isWindows()) {
-            return unixPathSyntax.replaceAll("/", "\\");
+            if(unixPathSyntax ==null) return "";
+            return unixPathSyntax.replaceAll("/", Matcher.quoteReplacement("\\"));
         }
         return unixPathSyntax;
     }
@@ -30,6 +32,7 @@ public class PathHelper {
 
     ///returns the current project directory [the location of Main.java file]
     public static String getProjectLocation() {
+        System.out.println(System.getProperty("user.dir"));
         return System.getProperty("user.dir");
     }
 
