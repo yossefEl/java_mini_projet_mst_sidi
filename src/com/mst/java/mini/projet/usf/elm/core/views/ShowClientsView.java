@@ -15,7 +15,7 @@ public class ShowClientsView extends MainDashboardContentArea {
 
     public DefaultTableModel tableModel;
     public JTable table;
-    DashAreaTitle title;
+
     JRadioButton filterByID;
     JRadioButton filterByName;
     JRadioButton filterByBirthday;

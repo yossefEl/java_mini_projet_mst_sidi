@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class SidebarItem extends JPanel {
+public class SidebarItem extends JPanel{
     private boolean isActive;
     private String itemLabelText;
     private JLabel itemLabel;
@@ -45,4 +45,7 @@ public class SidebarItem extends JPanel {
     public void setItemLabel(String itemLabelText) {
         this.itemLabelText = itemLabelText;
     }
+
+
+
 }

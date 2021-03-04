@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class UpdateDatabaseConfigView extends MainDashboardContentArea {
-    DashAreaTitle title;
+
     JLabel serverAddressLabel;
     JTextField serverAddressField;
     JLabel dbNameLabel;

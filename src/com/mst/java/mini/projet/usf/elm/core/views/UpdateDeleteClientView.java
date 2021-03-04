@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class UpdateDeleteClientView extends MainDashboardContentArea {
 
-    DashAreaTitle title;
+
     InputLabel clientNumberLabel;
     InputField clientNumberField;
 

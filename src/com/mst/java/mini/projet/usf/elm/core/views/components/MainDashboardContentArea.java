@@ -6,11 +6,12 @@ import com.mst.java.mini.projet.usf.elm.helpers.AppColors;
 import javax.swing.*;
 
 public class MainDashboardContentArea extends JPanel {
+    public DashAreaTitle title;
     public MainDashboardContentArea(){
         setLayout(null);
         setBounds(182,0,637,512);
         setBackground(AppColors.whiteColor);
-        setVisible(true);
+        setVisible(false);
 
     }
 }
