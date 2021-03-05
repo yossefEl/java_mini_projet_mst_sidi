@@ -21,7 +21,7 @@ public class HomeView extends JFrame {
         setBackground(AppColors.whiteColor);
         //init components
         sidebar = new Sidebar();
-        mainContent=new UpdateDeleteClientView();
+        mainContent=new AddClientView();
 
         //composing the view
         add(sidebar);
