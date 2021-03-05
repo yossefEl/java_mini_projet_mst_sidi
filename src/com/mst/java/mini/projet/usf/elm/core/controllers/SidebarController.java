@@ -1,6 +1,6 @@
 package com.mst.java.mini.projet.usf.elm.core.controllers;
 
-import com.mst.java.mini.projet.usf.elm.core.views.HomeView;
+import com.mst.java.mini.projet.usf.elm.core.views.DashboardView;
 import com.mst.java.mini.projet.usf.elm.core.views.components.MainDashboardContentArea;
 import com.mst.java.mini.projet.usf.elm.core.views.components.Sidebar;
 import com.mst.java.mini.projet.usf.elm.core.views.components.SidebarItem;
@@ -9,14 +9,14 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 public class SidebarController {
-    HomeView parentView;
+    DashboardView parentView;
     ArrayList<SidebarItem> sidebarItems;
     ArrayList<MainDashboardContentArea> contentAreaItems;
 
     public SidebarController() {
 
 
-    } public SidebarController(HomeView parentView) {
+    } public SidebarController(DashboardView parentView) {
         this.parentView = parentView;
         contentAreaItems = parentView.contentAreaItems;
         sidebarItems = parentView.sidebar.sidebarItems;
@@ -27,7 +27,7 @@ public class SidebarController {
 
 
     public void initialize(
-            HomeView parentView
+            DashboardView parentView
     ) {
         this.parentView = parentView;
         contentAreaItems = parentView.contentAreaItems;
