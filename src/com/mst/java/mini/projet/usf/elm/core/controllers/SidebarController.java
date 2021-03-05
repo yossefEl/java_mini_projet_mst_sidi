@@ -23,8 +23,6 @@ public class SidebarController {
         sidebarItems = parentView.sidebar.sidebarItems;
         initializeSidebarItemsListeners();
         initializeContentItems();
-
-
     }
 
 
