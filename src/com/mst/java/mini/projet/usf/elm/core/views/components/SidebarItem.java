@@ -20,6 +20,7 @@ public class SidebarItem extends JPanel{
         add(itemLabel, BorderLayout.CENTER);
         setBounds(position.x, position.y, 182, 30);
         setActive(false);
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
     }
 
