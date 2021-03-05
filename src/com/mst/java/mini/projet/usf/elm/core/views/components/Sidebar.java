@@ -5,6 +5,8 @@ import com.mst.java.mini.projet.usf.elm.helpers.AssetsProvider;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Sidebar extends JPanel {
     private JLabel appLogo;
@@ -13,6 +15,7 @@ public class Sidebar extends JPanel {
     public SidebarItem updateDeleteSidebarItem;
     public SidebarItem showClientsSidebarItem;
     public SidebarItem configureDBSidebarItem;
+    public ArrayList<SidebarItem> sidebarItems;
 
 
 
@@ -34,7 +37,11 @@ public class Sidebar extends JPanel {
         updateDeleteSidebarItem=new SidebarItem(new Point(0,160),"Modifier /Supprimer client");
         showClientsSidebarItem=new SidebarItem(new Point(0,190),"Afficher les clients");
         configureDBSidebarItem=new SidebarItem(new Point(0,220),"Configurer");
-
+        sidebarItems = new ArrayList<>(Arrays.asList(addClientSidebarItem,
+                updateDeleteSidebarItem,
+                showClientsSidebarItem,
+                configureDBSidebarItem
+                ));
         //composing the U
         add(appLogo);
         add(appName);

@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.Rectangle;
 
 public class AddClientView extends MainDashboardContentArea {
-    DashAreaTitle title;
+
     InputLabel clientNumberLabel;
     InputField clientNumberField;
 
