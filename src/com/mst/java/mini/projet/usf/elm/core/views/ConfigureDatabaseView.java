@@ -19,6 +19,7 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
 
     JLabel appLogo;
     JLabel appLabel;
+    JLabel loadingLable;
     JLabel serverAddressLabel;
     JTextField serverAddressField;
     JLabel dbNameLabel;
@@ -75,6 +76,10 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
                 AppColors.blueColor);
         saveConfigsButton.addActionListener(this);
 
+        loadingLable = new JLabel(AssetsProvider.loadingImage45,SwingConstants.CENTER);
+        loadingLable.setBounds(210, 424, 394, 45);
+        loadingLable.setVisible(false);
+
         //composing components
 
 
@@ -91,6 +96,7 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
         add(dbPasswordLabel);
         add(dbPasswordField);
         add(saveConfigsButton);
+        add(loadingLable);
         setSize(819, 512);
 
         setVisible(true);
@@ -106,6 +112,7 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
     }
 
     private void onSaveConfigurations() {
+        handleSavingLoadingAnimation(true);
         final DatabaseConfigModel databaseConfig = new DatabaseConfigModel(
                 serverAddressField.getText(),
                 dbNameField.getText(),
@@ -124,6 +131,7 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
                 //switch to HomeView
                 if (configsSaved) {
                     if (databaseController.isDatabaseConfigured()) {
+                        handleSavingLoadingAnimation(false);
                         HomeView parent = (HomeView) SwingUtilities.getWindowAncestor(this);
                         parent.showContent(parent.loginView);
                         parent.repaint();
@@ -135,6 +143,23 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
                 DialogHelper.showErrorMessage(this, e.getMessage());
             }
 
+        }
+
+
+        handleSavingLoadingAnimation(false);
+
+    }
+
+
+    //this methods is just for showing a loading animation to the save configs button
+    //This is good for not confusing the user and letting them that the program is in progress
+    private void handleSavingLoadingAnimation(boolean isLoading) {
+        if (isLoading) {
+            saveConfigsButton.setVisible(false);
+            loadingLable.setVisible(true);
+        } else {
+            saveConfigsButton.setVisible(true);
+            loadingLable.setVisible(false);
         }
 
     }

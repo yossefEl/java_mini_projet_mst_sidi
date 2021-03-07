@@ -33,6 +33,10 @@ public class AssetsProvider {
             PROJECT_ASSETS_PATH + "fste_front.jpg");
     public final static ImageIcon fsteUniversityLogo = new ImageIcon(
             PROJECT_ASSETS_PATH + "logo_fste.jpg");
+    public final static ImageIcon loadingImage200 = new ImageIcon(
+            PROJECT_ASSETS_PATH + "loader200px.gif");
+    public final static ImageIcon loadingImage45 = new ImageIcon(
+            PROJECT_ASSETS_PATH + "loader45px.gif");
 
 
 }

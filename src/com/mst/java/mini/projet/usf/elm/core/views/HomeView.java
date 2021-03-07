@@ -37,7 +37,7 @@ public class HomeView extends JFrame {
             if (authController.isAuthenticated()) {
                 showContent(dashboardView);
             } else {
-                showContent(loginView);
+                showContent(configureDatabaseView);
             }
         } else {
             showContent(configureDatabaseView);
