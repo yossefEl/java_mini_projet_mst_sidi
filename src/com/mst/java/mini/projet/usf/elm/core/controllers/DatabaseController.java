@@ -12,6 +12,8 @@ import java.sql.*;
 public class DatabaseController {
 
     //------------- attributes -------------
+
+
     private DatabaseConfigModel databaseConfig;
     final private File CONFIG_FILE = AssetsProvider.dbConfigFile;
     JComponent currentView;
@@ -91,7 +93,6 @@ public class DatabaseController {
         //else
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-
             connection = DriverManager.getConnection("jdbc:mysql://" + databaseConfig.getServerAdr() + "/" + databaseConfig.getDatabaseName(),
                     databaseConfig.getUsername(), databaseConfig.getPassword());
 
@@ -99,12 +100,12 @@ public class DatabaseController {
                 // the connection passed
                 return true;
             }
-            ResultSet rs=getStatement().executeQuery("SELECT * FROM clients");
-            while(rs.next())
-                System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));
+//            ResultSet rs = getStatement().executeQuery("SELECT * FROM clients");
+//            while (rs.next())
+//                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
         } catch (Exception e) {
-            System.out.println("error: "+e.getMessage());
-            DialogHelper.showErrorMessage(currentView, "Erreur survenue lors :\n" + e.getMessage());
+            System.out.println("error: " + e.getMessage());
+            DialogHelper.showErrorMessage(currentView, "Une erreur s'est produite lors de la tentative de connexion à la base de données :\n" + e.getMessage());
         }
 
         //the program will never reach here if the connection passed
@@ -127,21 +128,21 @@ public class DatabaseController {
     //This method saves the database configurations to [CONFIG_FILE -> /assets/db.config]
     public boolean saveDatabaseConfigurations() throws Exception {
         if (databaseConfig == null || databaseConfig.hasEssentialConfigurations()) return false;
-        boolean saved=false;
+        boolean saved = false;
         if (CONFIG_FILE.getParentFile().canWrite()) {
             try {
                 FileWriter fileWriter = new FileWriter(CONFIG_FILE, false);
                 fileWriter.write(databaseConfig.toString());
                 fileWriter.close();
                 //this the only the value of isSuccessful will change ...
-                 saved =true;
+                saved = true;
             } catch (IOException e) {
                 throw (new Exception("Erreur survenue lors de l'ecriture au fichier" + e.getMessage()));
             }
         } else {
             throw (new Exception("La permission d'écriture au dossier actuel n'est pas accordée!"));
         }
-        return  saved;
+        return saved;
     }
 
 
@@ -155,11 +156,11 @@ public class DatabaseController {
                 String line;
                 String[] configs = new String[5];
                 //reading line by line
-                int configIndex=0;
+                int configIndex = 0;
                 while ((line = bufferedReader.readLine()) != null) {
                     String[] cfg;
-                    cfg=line.split("=");
-                    configs[configIndex] =cfg[1];
+                    cfg = line.split("=");
+                    configs[configIndex] = cfg[1];
                     configIndex++;
                 }
                 databaseConfig = new DatabaseConfigModel(configs);

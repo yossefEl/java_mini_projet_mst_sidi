@@ -7,19 +7,21 @@ import java.util.Objects;
  */
 public class DatabaseConfigModel {
 
+
     //  ---------- constructors  ----------
     public DatabaseConfigModel(String serverAdr, String databaseName, String tableName, String username, String password) {
-        this.serverAdr = serverAdr;
-        this.databaseName = databaseName;
-        this.tableName = tableName;
-        this.username = username;
-        this.password = password;
+        setServerAdr(serverAdr);
+        setDatabaseName(databaseName);
+        setTableName(tableName);
+        setUsername(username);
+        setPassword(password);
     }
 
-    public DatabaseConfigModel(String[] configs){
+    public DatabaseConfigModel(String[] configs) {
         fromArray(configs);
     }
-    //  ---------- attributes  ----------
+
+    //  ---------- attributes  ---------
     private String serverAdr;
     private String databaseName;
     private String tableName;
@@ -28,46 +30,69 @@ public class DatabaseConfigModel {
 
     //  ---------- getters ans setters  ----------
 
-    public String getServerAdr() {
-        return serverAdr;
+
+    public void setServerAdr(String _serverAdr) {
+        this.serverAdr = cleanUpServerName(_serverAdr);
+        System.out.println(getServerAdr());
+
     }
 
-    public void setServerAdr(String serverAdr) {
-        this.serverAdr = serverAdr;
+    //Cleaning up the serverAdr attribute so the user won't worry about
+    // the form of the server name
+    private String cleanUpServerName(String _serverAdr) {
+
+        if (_serverAdr == null) return  "";
+        String temp=null;
+        if (_serverAdr.startsWith("http://")) {
+            temp= _serverAdr.replaceAll("http://", "").trim();
+        } else if (_serverAdr.startsWith("https://")) {
+            temp= _serverAdr.replaceAll("https://", "").trim();
+        } else {
+            temp= _serverAdr;
+        }
+
+        if (temp.endsWith("/")) {
+            temp = temp.replace("/", "");
+        }
+
+        return temp;
+    }
+
+    public void setDatabaseName(String databaseName) {
+        this.databaseName = databaseName != null ? databaseName.trim() : null;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName != null ? tableName.trim() : null;
+    }
+
+    public void setUsername(String username) {
+        this.username = username != null ? username.trim() : null;
+    }
+
+    public void setPassword(String password) {
+        this.password = password != null ? password.trim() : null;
+    }
+
+    public String getServerAdr() {
+        return serverAdr;
     }
 
     public String getDatabaseName() {
         return databaseName;
     }
 
-    public void setDatabaseName(String databaseName) {
-        this.databaseName = databaseName;
-    }
-
     public String getTableName() {
         return tableName;
-    }
-
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
     }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
 
 
     //  ---------- methods  ----------
@@ -81,20 +106,20 @@ public class DatabaseConfigModel {
                         "password=" + password;
     }
 
-    public void fromArray(String[] configs){
-        this.serverAdr=configs[0];
-        this.databaseName=configs[1];
-        this.tableName=configs[2];
-        this.username=configs[3];
-        this.password=configs[4];
+    public void fromArray(String[] configs) {
+        setServerAdr(configs[0]);
+        setDatabaseName(configs[1]);
+        setTableName(configs[2]);
+        setUsername(configs[3]);
+        setPassword(configs[4]);
     }
 
-    public boolean hasEssentialConfigurations(){
-        return !isBlankOrNull(serverAdr) || !isBlankOrNull(username) || !isBlankOrNull(databaseName);
+    public boolean hasEssentialConfigurations() {
+        return !isBlankOrNull(serverAdr) && isBlankOrNull(username) && !isBlankOrNull(databaseName);
     }
 
-    private boolean isBlankOrNull(String attribute){
-      return (attribute != null && !Objects.equals(attribute, "") && !Objects.equals(attribute, " "));
+    private boolean isBlankOrNull(String attribute) {
+        return (attribute == null || Objects.equals(attribute, "") || Objects.equals(attribute, " "));
     }
 
 }

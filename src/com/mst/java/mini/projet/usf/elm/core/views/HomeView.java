@@ -4,7 +4,6 @@ import com.mst.java.mini.projet.usf.elm.core.controllers.AuthController;
 import com.mst.java.mini.projet.usf.elm.core.controllers.DatabaseController;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -33,7 +32,6 @@ public class HomeView extends JFrame {
     }
 
 
-
     private void buildView() {
         if (databaseController.isDatabaseConfigured()) {
             if (authController.isAuthenticated()) {
@@ -44,14 +42,18 @@ public class HomeView extends JFrame {
         } else {
             showContent(configureDatabaseView);
         }
+
         setResizable(false);
+        pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(819, 512);
+
         setVisible(true);
         setLocationRelativeTo(null);
 
 
     }
+
     public void addAllItems() {
         for (JPanel item : items
         ) {
@@ -59,11 +61,14 @@ public class HomeView extends JFrame {
             add(item);
         }
     }
+
     public void showContent(JPanel view) {
         for (JPanel item : items
         ) {
-            view.setVisible(view == item);
 
+            item.setVisible(view == item);
+            System.out.println(view.isVisible());
+            repaint();
         }
     }
 
