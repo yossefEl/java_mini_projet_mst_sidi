@@ -1,25 +1,32 @@
 package com.mst.java.mini.projet.usf.elm.core.models;
+
+import java.util.Objects;
+
 /*
  * This model is the container of database configuration
  */
 public class DatabaseConfigModel {
 
-
+    //  ---------- constructors  ----------
     public DatabaseConfigModel(String serverAdr, String databaseName, String tableName, String username, String password) {
-    this.serverAdr = serverAdr;
-    this.databaseName = databaseName;
-    this.tableName = tableName;
-    this.username = username;
-    this.password = password;
-}
+        this.serverAdr = serverAdr;
+        this.databaseName = databaseName;
+        this.tableName = tableName;
+        this.username = username;
+        this.password = password;
+    }
+
+    public DatabaseConfigModel(String[] configs){
+        fromArray(configs);
+    }
+    //  ---------- attributes  ----------
     private String serverAdr;
     private String databaseName;
     private String tableName;
     private String username;
     private String password;
 
-
-
+    //  ---------- getters ans setters  ----------
 
     public String getServerAdr() {
         return serverAdr;
@@ -61,16 +68,33 @@ public class DatabaseConfigModel {
         this.password = password;
     }
 
+
+
+    //  ---------- methods  ----------
     @Override
     public String toString() {
         return
-                "serverAdr='" + serverAdr + '\'' +
-                ", databaseName='" + databaseName + '\'' +
-                ", tableName='" + tableName + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'';
+                "serverAdr=" + serverAdr + '\n' +
+                        "databaseName=" + databaseName + '\n' +
+                        "tableName=" + tableName + '\n' +
+                        "username=" + username + '\n' +
+                        "password=" + password;
     }
 
+    public void fromArray(String[] configs){
+        this.serverAdr=configs[0];
+        this.databaseName=configs[1];
+        this.tableName=configs[2];
+        this.username=configs[3];
+        this.password=configs[4];
+    }
 
+    public boolean hasEssentialConfigurations(){
+        return !isBlankOrNull(serverAdr) || !isBlankOrNull(username) || !isBlankOrNull(databaseName);
+    }
+
+    private boolean isBlankOrNull(String attribute){
+      return (attribute != null && !Objects.equals(attribute, "") && !Objects.equals(attribute, " "));
+    }
 
 }

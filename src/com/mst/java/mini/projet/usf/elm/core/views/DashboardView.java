@@ -14,7 +14,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class DashboardView extends JFrame implements ActionListener {
+public class DashboardView extends JPanel implements ActionListener {
     public Sidebar sidebar;
     public MainDashboardContentArea mainContent;
     public SidebarController sidebarController;
@@ -46,7 +46,6 @@ public class DashboardView extends JFrame implements ActionListener {
         //composing the view
         add(sidebar);
         add(mainContent);
-        setLocationRelativeTo(null);
         setSize(819, 512);
         setVisible(true);
 

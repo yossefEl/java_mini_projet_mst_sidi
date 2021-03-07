@@ -1,16 +1,21 @@
 package com.mst.java.mini.projet.usf.elm.core.views;
 
+import com.mst.java.mini.projet.usf.elm.core.controllers.DatabaseController;
+import com.mst.java.mini.projet.usf.elm.core.models.DatabaseConfigModel;
 import com.mst.java.mini.projet.usf.elm.core.views.components.CButton;
 import com.mst.java.mini.projet.usf.elm.core.views.components.InputField;
 import com.mst.java.mini.projet.usf.elm.core.views.components.InputLabel;
 import com.mst.java.mini.projet.usf.elm.core.views.components.TitleLabel;
 import com.mst.java.mini.projet.usf.elm.helpers.AppColors;
 import com.mst.java.mini.projet.usf.elm.helpers.AssetsProvider;
+import com.mst.java.mini.projet.usf.elm.helpers.DialogHelper;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class ConfigureDatabaseView extends JFrame {
+public class ConfigureDatabaseView extends JPanel implements ActionListener {
 
     JLabel appLogo;
     JLabel appLabel;
@@ -26,7 +31,12 @@ public class ConfigureDatabaseView extends JFrame {
     JTextField dbPasswordField;
     JButton saveConfigsButton;
 
+    ///
+
+    DatabaseController databaseController;
+
     public ConfigureDatabaseView() {
+        databaseController = new DatabaseController(this);
         buildView();
     }
 
@@ -63,6 +73,7 @@ public class ConfigureDatabaseView extends JFrame {
         saveConfigsButton = new CButton("Terminer",
                 new Rectangle(210, 424, 394, 35),
                 AppColors.blueColor);
+        saveConfigsButton.addActionListener(this);
 
         //composing components
 
@@ -81,10 +92,50 @@ public class ConfigureDatabaseView extends JFrame {
         add(dbPasswordField);
         add(saveConfigsButton);
         setSize(819, 512);
-        setLocationRelativeTo(null);
+
         setVisible(true);
 
 
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("Terminer")) {
+            onSaveConfigurations();
+        }
+    }
+
+    private void onSaveConfigurations() {
+        final DatabaseConfigModel databaseConfig = new DatabaseConfigModel(
+                serverAddressField.getText(),
+                dbNameField.getText(),
+                tableNameField.getText(),
+                dbUsernameField.getText(),
+                dbPasswordField.getText()
+
+        );
+
+        if (databaseConfig.hasEssentialConfigurations()) {
+            DialogHelper.showErrorMessage(this, "Erruer");
+        } else {
+            databaseController.setDatabaseConfig(databaseConfig);
+            try {
+                boolean configsSaved = databaseController.saveDatabaseConfigurations();
+                //switch to HomeView
+                if (configsSaved) {
+                    if (databaseController.isDatabaseConfigured()) {
+                        HomeView parent = (HomeView) SwingUtilities.getWindowAncestor(this);
+                        parent.showContent(parent.loginView);
+                        parent.repaint();
+                    }
+                } else {
+                    DialogHelper.showErrorMessage(this, "Oops ! Une erreur inattendue s'est produite lors de la tentative d'enregistrement des configurations de la base de données. Veuillez réessayer!");
+                }
+            } catch (Exception e) {
+                DialogHelper.showErrorMessage(this, e.getMessage());
+            }
+
+        }
+
+    }
 }

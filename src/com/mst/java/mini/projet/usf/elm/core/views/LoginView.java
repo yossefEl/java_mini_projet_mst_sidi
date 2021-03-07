@@ -5,7 +5,7 @@ import com.mst.java.mini.projet.usf.elm.helpers.AssetsProvider;
 
 import javax.swing.*;
 
-public class LoginView extends JFrame {
+public class LoginView extends JPanel {
 
 
     JLabel appLogoLabel;
@@ -60,7 +60,6 @@ public class LoginView extends JFrame {
         setBackground(AppColors.whiteColor);
         setLayout(null);
         setSize(819, 512);
-        setLocationRelativeTo(null);
         setVisible(true);
 
 
