@@ -19,7 +19,7 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
 
     JLabel appLogo;
     JLabel appLabel;
-    JLabel loadingLable;
+    JLabel loadingLabel;
     JLabel serverAddressLabel;
     JTextField serverAddressField;
     JLabel dbNameLabel;
@@ -76,9 +76,9 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
                 AppColors.blueColor);
         saveConfigsButton.addActionListener(this);
 
-        loadingLable = new JLabel(AssetsProvider.loadingImage45,SwingConstants.CENTER);
-        loadingLable.setBounds(210, 424, 394, 45);
-        loadingLable.setVisible(false);
+        loadingLabel = new JLabel(AssetsProvider.loadingImage45,SwingConstants.CENTER);
+        loadingLabel.setBounds(210, 424, 394, 45);
+        loadingLabel.setVisible(false);
 
         //composing components
 
@@ -96,7 +96,7 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
         add(dbPasswordLabel);
         add(dbPasswordField);
         add(saveConfigsButton);
-        add(loadingLable);
+        add(loadingLabel);
         setSize(819, 512);
 
         setVisible(true);
@@ -156,10 +156,10 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
     private void handleSavingLoadingAnimation(boolean isLoading) {
         if (isLoading) {
             saveConfigsButton.setVisible(false);
-            loadingLable.setVisible(true);
+            loadingLabel.setVisible(true);
         } else {
             saveConfigsButton.setVisible(true);
-            loadingLable.setVisible(false);
+            loadingLabel.setVisible(false);
         }
 
     }

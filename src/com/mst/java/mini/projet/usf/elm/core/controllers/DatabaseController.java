@@ -160,7 +160,7 @@ public class DatabaseController {
                 while ((line = bufferedReader.readLine()) != null) {
                     String[] cfg;
                     cfg = line.split("=");
-                    configs[configIndex] = cfg[1];
+                    configs[configIndex] = cfg.length!=2?"":cfg[1];
                     configIndex++;
                 }
                 databaseConfig = new DatabaseConfigModel(configs);
