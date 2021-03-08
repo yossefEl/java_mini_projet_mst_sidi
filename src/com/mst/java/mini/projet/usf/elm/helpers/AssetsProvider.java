@@ -16,6 +16,8 @@ public class AssetsProvider {
     //DON'T EDIT OR REMOVE THIS FILE MANUALLY
     public final static File dbConfigFile = new File(
             PROJECT_ASSETS_PATH + "db.config");
+    public final static File userSessionFile = new File(
+            PROJECT_ASSETS_PATH + ".session");
 
     public final static ImageIcon fsteLogo16 = new ImageIcon(
             PROJECT_ASSETS_PATH + "fste_16.png");

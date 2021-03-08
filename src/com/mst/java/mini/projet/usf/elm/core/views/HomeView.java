@@ -37,21 +37,17 @@ public class HomeView extends JFrame {
             if (authController.isAuthenticated()) {
                 showContent(dashboardView);
             } else {
-                showContent(dashboardView);
+                showContent(loginView);
             }
         } else {
             showContent(configureDatabaseView);
         }
-
         setResizable(false);
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(819, 512);
-
         setVisible(true);
         setLocationRelativeTo(null);
-
-
     }
 
     public void addAllItems() {
@@ -65,7 +61,6 @@ public class HomeView extends JFrame {
     public void showContent(JPanel view) {
         for (JPanel item : items
         ) {
-
             item.setVisible(view == item);
             System.out.println(view.isVisible());
             repaint();

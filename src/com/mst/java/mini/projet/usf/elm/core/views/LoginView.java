@@ -1,5 +1,7 @@
 package com.mst.java.mini.projet.usf.elm.core.views;
 
+import com.mst.java.mini.projet.usf.elm.core.controllers.AuthController;
+import com.mst.java.mini.projet.usf.elm.core.controllers.DatabaseController;
 import com.mst.java.mini.projet.usf.elm.helpers.AppColors;
 import com.mst.java.mini.projet.usf.elm.helpers.AssetsProvider;
 
@@ -8,6 +10,8 @@ import javax.swing.*;
 public class LoginView extends JPanel {
 
 
+
+    //------- attributes -------
     JLabel appLogoLabel;
     JLabel appNameLabel;
     JLabel usernameLabel;
@@ -15,9 +19,16 @@ public class LoginView extends JPanel {
     JLabel passwordLabel;
     JPasswordField passwordField;
     JButton loginButton;
+    //------- controllers -------
+    AuthController authController;
+    DatabaseController databaseController;
+    HomeView parent;
 
 
     public LoginView() {
+        databaseController = new DatabaseController(this);
+        authController = new AuthController();
+        parent = (HomeView) SwingUtilities.getWindowAncestor(this);
         buildView();
     }
 

@@ -32,9 +32,11 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
     JTextField dbPasswordField;
     JButton saveConfigsButton;
 
-    ///
+
+    /// controllers
 
     DatabaseController databaseController;
+    HomeView parent;
 
     public ConfigureDatabaseView() {
         databaseController = new DatabaseController(this);
@@ -132,7 +134,7 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
                 if (configsSaved) {
                     if (databaseController.isDatabaseConfigured()) {
                         handleSavingLoadingAnimation(false);
-                        HomeView parent = (HomeView) SwingUtilities.getWindowAncestor(this);
+                         parent = (HomeView) SwingUtilities.getWindowAncestor(this);
                         parent.showContent(parent.loginView);
                         parent.repaint();
                     }

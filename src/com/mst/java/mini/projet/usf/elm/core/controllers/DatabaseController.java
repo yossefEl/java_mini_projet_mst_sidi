@@ -85,7 +85,7 @@ public class DatabaseController {
     //connects to database using the configs given by the user
     //returns true if the connection passed
     //else it returns false and shows an error message if there is one
-    private boolean connectToDatabase() {
+    public boolean connectToDatabase() {
 
         //if no configurations found
         if (databaseConfig == null) return false;
