@@ -1,6 +1,6 @@
 package com.mst.java.mini.projet.usf.elm.core.views;
 
-import com.mst.java.mini.projet.usf.elm.core.views.components.CButton;
+import com.mst.java.mini.projet.usf.elm.core.views.components.PrimaryButton;
 import com.mst.java.mini.projet.usf.elm.core.views.components.DashAreaTitle;
 import com.mst.java.mini.projet.usf.elm.core.views.components.MainDashboardContentArea;
 import com.mst.java.mini.projet.usf.elm.helpers.AppColors;
@@ -21,7 +21,7 @@ public class ShowClientsView extends MainDashboardContentArea {
     JRadioButton filterByBirthday;
     ButtonGroup filterClientsCheckGroup;
 
-    CButton refreshFilteredClientsListButton;
+    PrimaryButton refreshFilteredClientsListButton;
 
     public ShowClientsView() {
         buildView();
@@ -44,7 +44,7 @@ public class ShowClientsView extends MainDashboardContentArea {
         filterByName = new JRadioButton("Nom", false);
         filterByBirthday = new JRadioButton("Date naissance", false);
 
-        refreshFilteredClientsListButton = new CButton("Ajouter",
+        refreshFilteredClientsListButton = new PrimaryButton("Ajouter",
                 new Rectangle(0, 0, 126, 35),
                 AppColors.orangeColor
         );

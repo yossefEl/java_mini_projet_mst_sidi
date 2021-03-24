@@ -27,9 +27,9 @@ public class UpdateDeleteClientView extends MainDashboardContentArea {
     InputLabel clientAddressLabel;
     InputField clientAddressField;
 
-    CButton addClientButton;
-    CButton cancelButton;
-    CButton searchButton;
+    PrimaryButton addClientButton;
+    PrimaryButton cancelButton;
+    PrimaryButton searchButton;
 
     public UpdateDeleteClientView() {
         buildView();
@@ -64,15 +64,15 @@ public class UpdateDeleteClientView extends MainDashboardContentArea {
         clientAddressLabel = new InputLabel("Adresse", new Rectangle(50, 244, 55, 17));
         clientAddressField = new InputField(new Rectangle(184, 236, 260, 35));
 
-        addClientButton = new CButton("Modifier",
+        addClientButton = new PrimaryButton("Modifier",
                 new Rectangle(318, 286, 126, 35),
                 AppColors.blueColor
         );
-        cancelButton = new CButton("Supprimer",
+        cancelButton = new PrimaryButton("Supprimer",
                 new Rectangle(184, 286, 126, 35),
                 AppColors.redColor
         );
-        searchButton = new CButton("Chercher",
+        searchButton = new PrimaryButton("Chercher",
                 new Rectangle(461, 60, 126, 35),
                 AppColors.orangeColor
         );

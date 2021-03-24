@@ -3,7 +3,7 @@ package com.mst.java.mini.projet.usf.elm.helpers;
 import java.util.Base64;
 
 public class EncryptionHelper {
-    /*Author Al-Mothafar
+    /*inspired from  Al-Mothafar
     * response link on StackOverflow :
     * https://stackoverflow.com/a/37318088/13783377
     */

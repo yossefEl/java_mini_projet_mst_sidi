@@ -12,4 +12,12 @@ public class DialogHelper {
                 "Erreur survenue",
                 JOptionPane.ERROR_MESSAGE);
     }
+    public static void showErrorMessage(Component parent,String title,String message) {
+        final JLabel messageLabel=new JLabel(   "<html><div style='width:300px'>"+ message +"</div></html>",SwingConstants.LEFT);
+        JOptionPane.showMessageDialog(
+                parent,
+                messageLabel,
+                title,
+                JOptionPane.ERROR_MESSAGE);
+    }
 }

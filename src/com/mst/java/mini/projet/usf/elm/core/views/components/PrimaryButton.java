@@ -6,12 +6,12 @@ import com.mst.java.mini.projet.usf.elm.helpers.PathHelper;
 import javax.swing.JButton;
 import java.awt.*;
 
-//CButton -> Custom button
+//Primary Button -> Custom button
 // this is for decorated and customized button component to avoid repeating the code
-public class CButton extends JButton {
+public class PrimaryButton extends JButton {
 
 
-    public CButton(String text, Rectangle bounds, Color backgroundColor) {
+    public PrimaryButton(String text, Rectangle bounds, Color backgroundColor) {
         super(text);
         setBounds(bounds);
         setOpaque(true);

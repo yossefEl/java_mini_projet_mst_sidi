@@ -2,7 +2,6 @@ package com.mst.java.mini.projet.usf.elm.core.views;
 
 import com.mst.java.mini.projet.usf.elm.core.views.components.*;
 import com.mst.java.mini.projet.usf.elm.helpers.AppColors;
-import com.mst.java.mini.projet.usf.elm.helpers.AssetsProvider;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +19,7 @@ public class UpdateDBConfigView extends MainDashboardContentArea {
     JLabel dbPasswordLabel;
     JTextField dbPasswordField;
     JButton saveConfigsButton;
-    CButton cancelButton;
+    PrimaryButton cancelButton;
 
     public UpdateDBConfigView() {
         buildView();
@@ -52,11 +51,11 @@ public class UpdateDBConfigView extends MainDashboardContentArea {
 
 
 
-        saveConfigsButton = new CButton("Modifier",
+        saveConfigsButton = new PrimaryButton("Modifier",
                 new Rectangle(390, 286, 126, 35),
                 AppColors.blueColor
         );
-        cancelButton = new CButton("Annuler",
+        cancelButton = new PrimaryButton("Annuler",
                 new Rectangle(256, 286, 126, 35),
                 AppColors.redColor
         );

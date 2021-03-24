@@ -26,8 +26,8 @@ public class AddClientView extends MainDashboardContentArea {
     InputLabel clientAddressLabel;
     InputField clientAddressField;
 
-    CButton addClientButton;
-    CButton cancelButton;
+    PrimaryButton addClientButton;
+    PrimaryButton cancelButton;
 
     public AddClientView() {
         buildView();
@@ -63,11 +63,11 @@ public class AddClientView extends MainDashboardContentArea {
         clientAddressLabel = new InputLabel("Adresse", new Rectangle(111, 244, 55, 17));
         clientAddressField = new InputField(new Rectangle(266, 236, 260, 35));
 
-        addClientButton = new CButton("Ajouter",
+        addClientButton = new PrimaryButton("Ajouter",
                 new Rectangle(400, 286, 126, 35),
                 AppColors.blueColor
         );
-        cancelButton = new CButton("Annuler",
+        cancelButton = new PrimaryButton("Annuler",
                 new Rectangle(266, 286, 126, 35),
                 AppColors.redColor
         );

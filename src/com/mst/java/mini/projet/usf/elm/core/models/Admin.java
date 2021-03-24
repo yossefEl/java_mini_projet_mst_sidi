@@ -1,15 +1,27 @@
 package com.mst.java.mini.projet.usf.elm.core.models;
 
-import com.mst.java.mini.projet.usf.elm.core.views.HomeView;
+import com.mst.java.mini.projet.usf.elm.helpers.DBHelper;
 
-import java.util.Objects;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-public class Admin extends User{
+public class Admin extends User {
 
+
+    DBHelper dbHelper;
+    //-------- attributes -------
+    private boolean isLogged;
+    private String id;
+    private String fullName;
+    private String username;
+    private String password;
 
     //-------- controllers -------
-    public Admin(String[] data) {
-        fromArray(data);
+    public Admin() {
+        isLogged = false;
+        dbHelper = new DBHelper();
     }
 
     public Admin(String id, String fullName, String username, String password) {
@@ -17,103 +29,78 @@ public class Admin extends User{
         this.fullName = fullName;
         this.username = username;
         this.password = password;
+        isLogged = false;
+        dbHelper = new DBHelper();
     }
-
-    //-------- attributes -------
-    private String id;
-    private String fullName;
-    private String username;
-    private String password;
 
 
     //-------- setters and gettters -------
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
 
 
     public void setUsername(String username) {
         this.username = username;
     }
 
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-
     public void setPassword(String password) {
         this.password = password;
     }
 
+    public boolean isLogged() {
+        return isLogged;
+    }
+
+    public void setLogged(boolean logged) {
+        isLogged = logged;
+    }
 
     //-------- methods -------
 
 
     @Override
-    public String toString() {
-
-        return getId() +":"+getFullName()+":"+getUsername()+":"+getPassword();
-    }
-
-    private void fromArray(String[] data) {
-        setId(data[0]);
-        setFullName(data[1]);
-        setUsername(data[2]);
-        setPassword(data[3]);
-    }
-
-    public boolean hasUsernameAndPassword() {
-        return !isBlankOrNull(username) && !isBlankOrNull(password);
-    }
-
-    private boolean isBlankOrNull(String attribute) {
-        return (attribute == null
-                || Objects.equals(attribute, "")
-                || Objects.equals(attribute, " "));
-    }
-
-
-    @Override
     public void create() {
-
+        //    inserts  an admin into the database
     }
 
     @Override
     public User get() {
+//        gets the user from the database
         return null;
     }
 
     @Override
     public void delete() {
+//        delete the user from database
 
     }
 
     @Override
     public void update() {
 
+//        update the admin information in the database
+
     }
 
 
-    public boolean authenticate() {
+    /**
+     * @return true if the authentication succeeded else it will return false
+     * @throws SQLException : this exception will produced if there is any sql errors
+     *                      so we can show the Error message dialog
+     */
+    public boolean authenticate() throws Exception {
+
+        ResultSet resultSet;
+        //create a select query to check if the username and the password exist in the database
+        String query = "SELECT * FROM admins WHERE login = '" + username + "' AND password ='" + password + "'";
+
+        dbHelper.connectToDatabase();
+        Connection connection = dbHelper.getConnection();
+        Statement statement = connection.createStatement();
+        resultSet = statement.executeQuery(query);
+        if (resultSet.next()) {
+            System.out.println("hello");
+            setLogged(true);
+            return true;
+        }
         return false;
     }
-
 }

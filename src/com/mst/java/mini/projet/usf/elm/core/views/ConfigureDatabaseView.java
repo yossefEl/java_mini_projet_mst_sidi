@@ -2,7 +2,7 @@ package com.mst.java.mini.projet.usf.elm.core.views;
 
 import com.mst.java.mini.projet.usf.elm.helpers.DBHelper;
 import com.mst.java.mini.projet.usf.elm.core.models.DBConfig;
-import com.mst.java.mini.projet.usf.elm.core.views.components.CButton;
+import com.mst.java.mini.projet.usf.elm.core.views.components.PrimaryButton;
 import com.mst.java.mini.projet.usf.elm.core.views.components.InputField;
 import com.mst.java.mini.projet.usf.elm.core.views.components.InputLabel;
 import com.mst.java.mini.projet.usf.elm.core.views.components.TitleLabel;
@@ -14,7 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.util.concurrent.TimeUnit;
 
 public class ConfigureDatabaseView extends JPanel implements ActionListener {
 
@@ -40,12 +40,9 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
     HomeView parent;
 
     public ConfigureDatabaseView() {
-        try {
-            databaseHelper = new DBHelper();
-        } catch (SQLException | ClassNotFoundException exception) {
-            exception.printStackTrace();
-        }
+        databaseHelper = new DBHelper();
         buildView();
+        System.out.println("Im shown");
     }
 
     private void buildView() {
@@ -78,7 +75,7 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
                 new Rectangle(210, 382, 112, 17));
         dbPasswordField = new InputField(new Rectangle(344, 374, 260, 35));
 
-        saveConfigsButton = new CButton("Terminer",
+        saveConfigsButton = new PrimaryButton("Terminer",
                 new Rectangle(210, 424, 394, 35),
                 AppColors.blueColor);
         saveConfigsButton.addActionListener(this);
@@ -120,6 +117,7 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
 
     private void onSaveConfigurations() {
         handleSavingLoadingAnimation(true);
+
         final DBConfig databaseConfig = new DBConfig(
                 serverAddressField.getText(),
                 dbNameField.getText(),
@@ -134,13 +132,19 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
         } else {
             databaseHelper.setDatabaseConfig(databaseConfig);
             try {
-                boolean configsSaved = databaseHelper.saveDatabaseConfigurations();
+                boolean configsSaved = databaseHelper.getDatabaseConfig().saveConfiguration();
                 //switch to HomeView
                 if (configsSaved) {
                     if (databaseHelper.isDatabaseConfigured()) {
+                        try {
+                            TimeUnit.SECONDS.sleep(1);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         handleSavingLoadingAnimation(false);
+
                          parent = (HomeView) SwingUtilities.getWindowAncestor(this);
-                        parent.showContent(parent.loginView);
+                        parent.showContent(parent.getLoginView());
                         parent.repaint();
                     }
                 } else {

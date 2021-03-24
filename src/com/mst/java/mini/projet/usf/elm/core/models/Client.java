@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class Client extends User{
 
     //---------- attributes ---------
-    DBHelper dbHelper;
+    private DBHelper dbHelper;
     private String id;
     private String firstName;
     private String lastName;
