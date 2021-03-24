@@ -16,6 +16,7 @@ public class CButton extends JButton {
         setBounds(bounds);
         setOpaque(true);
         if (PathHelper.isWindows()) {
+            //this decoration is only working under Windows OS
             setBackground(backgroundColor);
             setForeground(AppColors.whiteColor);
         }

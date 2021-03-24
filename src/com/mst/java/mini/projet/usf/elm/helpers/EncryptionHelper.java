@@ -27,7 +27,7 @@ public class EncryptionHelper {
     }
 
 
-    public static String dencrypt(String encryptedData) {
+    public static String decrypt(String encryptedData) {
 
 
         StringBuilder tmp = new StringBuilder();

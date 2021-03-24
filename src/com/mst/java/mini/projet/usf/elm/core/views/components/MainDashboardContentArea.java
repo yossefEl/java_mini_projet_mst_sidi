@@ -1,6 +1,5 @@
 package com.mst.java.mini.projet.usf.elm.core.views.components;
 
-import com.mst.java.mini.projet.usf.elm.core.views.AddClientView;
 import com.mst.java.mini.projet.usf.elm.helpers.AppColors;
 
 import javax.swing.*;

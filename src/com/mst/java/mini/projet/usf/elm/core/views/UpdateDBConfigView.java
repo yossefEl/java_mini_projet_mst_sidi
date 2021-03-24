@@ -7,7 +7,7 @@ import com.mst.java.mini.projet.usf.elm.helpers.AssetsProvider;
 import javax.swing.*;
 import java.awt.*;
 
-public class UpdateDatabaseConfigView extends MainDashboardContentArea {
+public class UpdateDBConfigView extends MainDashboardContentArea {
 
     JLabel serverAddressLabel;
     JTextField serverAddressField;
@@ -22,7 +22,7 @@ public class UpdateDatabaseConfigView extends MainDashboardContentArea {
     JButton saveConfigsButton;
     CButton cancelButton;
 
-    public UpdateDatabaseConfigView() {
+    public UpdateDBConfigView() {
         buildView();
     }
 

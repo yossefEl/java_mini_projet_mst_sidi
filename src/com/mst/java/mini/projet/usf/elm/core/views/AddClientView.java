@@ -49,17 +49,15 @@ public class AddClientView extends MainDashboardContentArea {
         clientLastNameField = new InputField(new Rectangle(266, 148, 260, 35));
 
         clientBirthdayLabel = new InputLabel("Date naissance", new Rectangle(111, 200, 103, 17));
-        dayBox = new JComboBox<>(DateTimeHelper.getDays(1,2012));
-        dayBox.setBounds(266,192,68,35);
+        dayBox = new JComboBox<>(DateTimeHelper.getDays(1, 2012));
+        dayBox.setBounds(266, 192, 68, 35);
         dayBox.setBackground(AppColors.lightGreyColor);
         monthBox = new JComboBox<>(DateTimeHelper.getMonths());
-        monthBox.setBounds(332,192,105,35);
+        monthBox.setBounds(332, 192, 105, 35);
         monthBox.setBackground(AppColors.lightGreyColor);
-        yearBox=new JComboBox<>(DateTimeHelper.getYears());
-        yearBox.setBounds(435,192,91,35);
+        yearBox = new JComboBox<>(DateTimeHelper.getYears());
+        yearBox.setBounds(435, 192, 91, 35);
         yearBox.setBackground(AppColors.lightGreyColor);
-
-
 
 
         clientAddressLabel = new InputLabel("Adresse", new Rectangle(111, 244, 55, 17));
@@ -90,6 +88,6 @@ public class AddClientView extends MainDashboardContentArea {
         add(clientAddressField);
         add(addClientButton);
         add(cancelButton);
-setVisible(true);
+        setVisible(true);
     }
 }

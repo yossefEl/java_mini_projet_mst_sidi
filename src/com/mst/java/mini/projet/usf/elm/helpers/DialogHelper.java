@@ -11,6 +11,5 @@ public class DialogHelper {
                 messageLabel,
                 "Erreur survenue",
                 JOptionPane.ERROR_MESSAGE);
-
     }
 }

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class DateTimeHelper {
+    Date date=new Date();
 
     public static String[] getDays(int monthOfYear, int year) {
         YearMonth yearMonthObject = YearMonth.of(year, monthOfYear);

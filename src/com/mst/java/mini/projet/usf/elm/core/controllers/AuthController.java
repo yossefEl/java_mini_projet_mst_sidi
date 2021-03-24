@@ -1,17 +1,16 @@
 package com.mst.java.mini.projet.usf.elm.core.controllers;
 
 
-import com.mst.java.mini.projet.usf.elm.core.models.AdminModel;
-import com.mst.java.mini.projet.usf.elm.core.models.DatabaseConfigModel;
+import com.mst.java.mini.projet.usf.elm.core.models.Admin;
 import com.mst.java.mini.projet.usf.elm.core.views.HomeView;
 import com.mst.java.mini.projet.usf.elm.helpers.AssetsProvider;
+import com.mst.java.mini.projet.usf.elm.helpers.DBHelper;
 import com.mst.java.mini.projet.usf.elm.helpers.EncryptionHelper;
 
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class AuthController {
 
@@ -20,14 +19,14 @@ public class AuthController {
         setLoggedIn(false);
     }
 
-    public AuthController(DatabaseController databaseController) {
+    public AuthController(DBHelper databaseController) {
         this.databaseController = databaseController;
     }
 
     //------- attributes ---------
     private boolean isLoggedIn;
-    private AdminModel admin;
-    private DatabaseController databaseController;
+    private Admin admin;
+    private DBHelper databaseController;
     private final File SESSION_FILE = AssetsProvider.userSessionFile;
 
     //-------getters and setters ---------
@@ -35,7 +34,7 @@ public class AuthController {
         return isLoggedIn;
     }
 
-    public AdminModel getAdmin() {
+    public Admin getAdmin() {
         return admin;
     }
 
@@ -43,7 +42,7 @@ public class AuthController {
         isLoggedIn = loggedIn;
     }
 
-    public void setAdmin(AdminModel admin) {
+    public void setAdmin(Admin admin) {
         this.admin = admin;
     }
 
@@ -90,7 +89,7 @@ public class AuthController {
     }
 
 
-    public boolean saveSession(AdminModel admin) throws Exception {
+    public boolean saveSession(Admin admin) throws Exception {
         if (admin == null || admin.hasUsernameAndPassword()) return false;
         boolean saved = false;
         if (SESSION_FILE.getParentFile().canWrite()) {
@@ -118,11 +117,13 @@ public class AuthController {
             try {
                 //clearing the table
                 BufferedReader bufferedReader = new BufferedReader(new FileReader(SESSION_FILE));
+
+
                 String line;
                 //reading line by line
                 while ((line = bufferedReader.readLine()) != null) {
                     //line contains the current user session
-                    admin = new AdminModel(EncryptionHelper.dencrypt(line).split(":"));
+                    admin = new Admin(EncryptionHelper.decrypt(line).split(":"));
                 }
             } catch (IOException e) {
                 throw (new Exception("Erreur survenue lors de la lecture du fichier: \n" + e.getMessage()));
@@ -133,17 +134,6 @@ public class AuthController {
     }
 
 
-    public boolean signOut(HomeView parent) throws Exception {
-        final AdminModel adminTemp = admin;
-        //
-        admin = new AdminModel("", "", "", "");
-        if (saveSession(admin)) {
-            parent.showContent(parent.loginView);
-            return true;
-        } else {
-            admin = adminTemp;
-        }
-        return false;
-    }
+
 
 }

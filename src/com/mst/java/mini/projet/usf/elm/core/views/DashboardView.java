@@ -22,7 +22,7 @@ public class DashboardView extends JPanel implements ActionListener {
             Arrays.asList(new AddClientView(),
                     new UpdateDeleteClientView(),
                     new ShowClientsView(),
-                    new UpdateDatabaseConfigView()
+                    new UpdateDBConfigView()
             )
     );
 

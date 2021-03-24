@@ -1,16 +1,18 @@
 package com.mst.java.mini.projet.usf.elm.core.models;
 
+import com.mst.java.mini.projet.usf.elm.core.views.HomeView;
+
 import java.util.Objects;
 
-public class AdminModel {
+public class Admin extends User{
 
 
     //-------- controllers -------
-    public AdminModel(String[] data) {
+    public Admin(String[] data) {
         fromArray(data);
     }
 
-    public AdminModel(String id, String fullName, String username, String password) {
+    public Admin(String id, String fullName, String username, String password) {
         this.id = id;
         this.fullName = fullName;
         this.username = username;
@@ -67,6 +69,7 @@ public class AdminModel {
 
     @Override
     public String toString() {
+
         return getId() +":"+getFullName()+":"+getUsername()+":"+getPassword();
     }
 
@@ -75,7 +78,6 @@ public class AdminModel {
         setFullName(data[1]);
         setUsername(data[2]);
         setPassword(data[3]);
-
     }
 
     public boolean hasUsernameAndPassword() {
@@ -83,9 +85,35 @@ public class AdminModel {
     }
 
     private boolean isBlankOrNull(String attribute) {
-        return (attribute == null || Objects.equals(attribute, "") || Objects.equals(attribute, " "));
+        return (attribute == null
+                || Objects.equals(attribute, "")
+                || Objects.equals(attribute, " "));
     }
 
 
+    @Override
+    public void create() {
+
+    }
+
+    @Override
+    public User get() {
+        return null;
+    }
+
+    @Override
+    public void delete() {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+
+    public boolean authenticate() {
+        return false;
+    }
 
 }

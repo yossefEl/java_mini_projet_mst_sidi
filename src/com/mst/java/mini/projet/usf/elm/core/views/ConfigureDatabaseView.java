@@ -1,7 +1,7 @@
 package com.mst.java.mini.projet.usf.elm.core.views;
 
-import com.mst.java.mini.projet.usf.elm.core.controllers.DatabaseController;
-import com.mst.java.mini.projet.usf.elm.core.models.DatabaseConfigModel;
+import com.mst.java.mini.projet.usf.elm.helpers.DBHelper;
+import com.mst.java.mini.projet.usf.elm.core.models.DBConfig;
 import com.mst.java.mini.projet.usf.elm.core.views.components.CButton;
 import com.mst.java.mini.projet.usf.elm.core.views.components.InputField;
 import com.mst.java.mini.projet.usf.elm.core.views.components.InputLabel;
@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class ConfigureDatabaseView extends JPanel implements ActionListener {
 
@@ -35,11 +36,15 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
 
     /// controllers
 
-    DatabaseController databaseController;
+    DBHelper databaseHelper;
     HomeView parent;
 
     public ConfigureDatabaseView() {
-        databaseController = new DatabaseController(this);
+        try {
+            databaseHelper = new DBHelper();
+        } catch (SQLException | ClassNotFoundException exception) {
+            exception.printStackTrace();
+        }
         buildView();
     }
 
@@ -115,7 +120,7 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
 
     private void onSaveConfigurations() {
         handleSavingLoadingAnimation(true);
-        final DatabaseConfigModel databaseConfig = new DatabaseConfigModel(
+        final DBConfig databaseConfig = new DBConfig(
                 serverAddressField.getText(),
                 dbNameField.getText(),
                 tableNameField.getText(),
@@ -125,14 +130,14 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
         );
 
         if (databaseConfig.hasEssentialConfigurations()) {
-            DialogHelper.showErrorMessage(this, "Erruer");
+            DialogHelper.showErrorMessage(this, "Erreur");
         } else {
-            databaseController.setDatabaseConfig(databaseConfig);
+            databaseHelper.setDatabaseConfig(databaseConfig);
             try {
-                boolean configsSaved = databaseController.saveDatabaseConfigurations();
+                boolean configsSaved = databaseHelper.saveDatabaseConfigurations();
                 //switch to HomeView
                 if (configsSaved) {
-                    if (databaseController.isDatabaseConfigured()) {
+                    if (databaseHelper.isDatabaseConfigured()) {
                         handleSavingLoadingAnimation(false);
                          parent = (HomeView) SwingUtilities.getWindowAncestor(this);
                         parent.showContent(parent.loginView);
@@ -146,7 +151,6 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
             }
 
         }
-
 
         handleSavingLoadingAnimation(false);
 

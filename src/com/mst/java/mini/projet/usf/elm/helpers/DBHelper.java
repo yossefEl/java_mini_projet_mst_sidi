@@ -1,39 +1,38 @@
-package com.mst.java.mini.projet.usf.elm.core.controllers;
+package com.mst.java.mini.projet.usf.elm.helpers;
 
-import com.mst.java.mini.projet.usf.elm.core.models.DatabaseConfigModel;
-import com.mst.java.mini.projet.usf.elm.helpers.AssetsProvider;
-import com.mst.java.mini.projet.usf.elm.helpers.DialogHelper;
+import com.mst.java.mini.projet.usf.elm.core.models.DBConfig;
 
 import javax.swing.*;
 import java.io.*;
 import java.sql.*;
 
 
-public class DatabaseController {
+public class DBHelper {
 
     //------------- attributes -------------
-
-
-    private DatabaseConfigModel databaseConfig;
+    private DBConfig databaseConfig;
     final private File CONFIG_FILE = AssetsProvider.dbConfigFile;
-    JComponent currentView;
-    private Statement statement;
     private Connection connection;
 
 
     //    ------------- constructors -------------
-
-    public DatabaseController(JComponent currentView) {
-        this.currentView = currentView;
+    public DBHelper() {
+        try {
+            connectToDatabase();
+        } catch (ClassNotFoundException | SQLException e) {
+           DialogHelper.showErrorMessage(
+                   null,"Les message suivant est survenue:\n"+ e.getMessage()
+           );
+        }
     }
 
 
     // -------------setters and getters -------------
-    public DatabaseConfigModel getDatabaseConfig() {
+    public DBConfig getDatabaseConfig() {
         return databaseConfig;
     }
 
-    public void setDatabaseConfig(DatabaseConfigModel databaseConfig) {
+    public void setDatabaseConfig(DBConfig databaseConfig) {
         this.databaseConfig = databaseConfig;
     }
 
@@ -41,27 +40,15 @@ public class DatabaseController {
         return connection;
     }
 
-    public Statement getStatement() throws SQLException {
-        statement = connection.createStatement();
-        return statement;
-    }
-
-    public void setStatement(Statement statement) {
-        this.statement = statement;
-    }
 
 
     //-------------methods -------------
-
-
     /*this method checks if the database is already configured or not
     if yes then it returns true
     otherwise returns false
     */
-    public boolean isDatabaseConfigured() {
+    public boolean isDatabaseConfigured() throws SQLException, ClassNotFoundException {
         //checking the existence of the configuration file
-
-
         if (!CONFIG_FILE.exists()) {
             System.out.println("Files doesn't exist ");
             return false;
@@ -85,42 +72,24 @@ public class DatabaseController {
     //connects to database using the configs given by the user
     //returns true if the connection passed
     //else it returns false and shows an error message if there is one
-    public boolean connectToDatabase() {
+    public boolean connectToDatabase() throws ClassNotFoundException, SQLException {
 
         //if no configurations found
         if (databaseConfig == null) return false;
 
-        //else
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://" + databaseConfig.getServerAdr() + "/" + databaseConfig.getDatabaseName(),
-                    databaseConfig.getUsername(), databaseConfig.getPassword());
-
-            if (connection != null) {
-                // the connection passed
-                return true;
-            }
-//            ResultSet rs = getStatement().executeQuery("SELECT * FROM clients");
-//            while (rs.next())
-//                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
-        } catch (Exception e) {
-            System.out.println("error: " + e.getMessage());
-            DialogHelper.showErrorMessage(currentView, "Une erreur s'est produite lors de la tentative de connexion à la base de données :\n" + e.getMessage());
-        }
-
-        //the program will never reach here if the connection passed
-        // which means that there is an error occurred
-        return false;
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        connection = DriverManager.getConnection("jdbc:mysql://" + databaseConfig.getServerAdr() + "/" + databaseConfig.getDatabaseName(),
+                databaseConfig.getUsername(), databaseConfig.getPassword());
+        // the connection passed
+        return connection != null;
     }
 
 
     //closes the database connection and shows an error if it failed
-    public void closeConnection() {
-        try {
+    public void closeConnection() throws SQLException {
+        if (connection != null) {
             connection.close();
-        } catch (SQLException exception) {
-            DialogHelper.showErrorMessage(currentView, "Impossible de fermer la connexion à la base de données! :\n"
-                    + exception.getMessage());
+
         }
     }
 
@@ -160,10 +129,10 @@ public class DatabaseController {
                 while ((line = bufferedReader.readLine()) != null) {
                     String[] cfg;
                     cfg = line.split("=");
-                    configs[configIndex] = cfg.length!=2?"":cfg[1];
+                    configs[configIndex] = cfg.length != 2 ? "" : cfg[1];
                     configIndex++;
                 }
-                databaseConfig = new DatabaseConfigModel(configs);
+                databaseConfig = new DBConfig(configs);
             } catch (IOException e) {
                 throw (new Exception("Erreur survenue lors de la lecture du fichier: \n" + e.getMessage()));
             }

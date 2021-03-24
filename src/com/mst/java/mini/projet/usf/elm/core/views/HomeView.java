@@ -1,15 +1,17 @@
 package com.mst.java.mini.projet.usf.elm.core.views;
 
 import com.mst.java.mini.projet.usf.elm.core.controllers.AuthController;
-import com.mst.java.mini.projet.usf.elm.core.controllers.DatabaseController;
+import com.mst.java.mini.projet.usf.elm.helpers.DBHelper;
+import com.mst.java.mini.projet.usf.elm.helpers.DialogHelper;
 
 import javax.swing.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class HomeView extends JFrame {
 
-    public DatabaseController databaseController;
+    public DBHelper databaseController;
     public AuthController authController;
     ArrayList<JPanel> items;
     public DashboardView dashboardView;
@@ -25,7 +27,82 @@ public class HomeView extends JFrame {
         configureDatabaseView = new ConfigureDatabaseView();
         items = new ArrayList<>(Arrays.asList(dashboardView, loginView, configureDatabaseView));
         addAllItems();
-        databaseController = new DatabaseController(this.rootPane);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         authController = new AuthController();
         buildView();
 
@@ -33,14 +110,18 @@ public class HomeView extends JFrame {
 
 
     private void buildView() {
-        if (databaseController.isDatabaseConfigured()) {
-            if (authController.isAuthenticated()) {
-                showContent(dashboardView);
+        try {
+            if (databaseController.isDatabaseConfigured()) {
+                if (!authController.isAuthenticated()) {
+                    showContent(dashboardView);
+                } else {
+                    showContent(loginView);
+                }
             } else {
-                showContent(loginView);
+                showContent(configureDatabaseView);
             }
-        } else {
-            showContent(configureDatabaseView);
+        } catch (SQLException | ClassNotFoundException exception) {
+            DialogHelper.showErrorMessage(this,exception.getMessage());
         }
         setResizable(false);
         pack();

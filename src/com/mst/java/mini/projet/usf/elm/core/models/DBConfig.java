@@ -5,11 +5,11 @@ import java.util.Objects;
 /*
  * This model is the container of database configuration
  */
-public class DatabaseConfigModel {
+public class DBConfig {
 
 
     //  ---------- constructors  ----------
-    public DatabaseConfigModel(String serverAdr, String databaseName, String tableName, String username, String password) {
+    public DBConfig(String serverAdr, String databaseName, String tableName, String username, String password) {
         setServerAdr(serverAdr);
         setDatabaseName(databaseName);
         setTableName(tableName);
@@ -17,7 +17,7 @@ public class DatabaseConfigModel {
         setPassword(password);
     }
 
-    public DatabaseConfigModel(String[] configs) {
+    public DBConfig(String[] configs) {
         fromArray(configs);
     }
 

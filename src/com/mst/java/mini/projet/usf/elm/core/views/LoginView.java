@@ -1,7 +1,7 @@
 package com.mst.java.mini.projet.usf.elm.core.views;
 
 import com.mst.java.mini.projet.usf.elm.core.controllers.AuthController;
-import com.mst.java.mini.projet.usf.elm.core.controllers.DatabaseController;
+import com.mst.java.mini.projet.usf.elm.helpers.DBHelper;
 import com.mst.java.mini.projet.usf.elm.helpers.AppColors;
 import com.mst.java.mini.projet.usf.elm.helpers.AssetsProvider;
 
@@ -21,14 +21,13 @@ public class LoginView extends JPanel {
     JButton loginButton;
     //------- controllers -------
     AuthController authController;
-    DatabaseController databaseController;
+    DBHelper databaseController;
     HomeView parent;
 
-
     public LoginView() {
-        databaseController = new DatabaseController(this);
-        authController = new AuthController();
-        parent = (HomeView) SwingUtilities.getWindowAncestor(this);
+//        databaseController = new DatabaseController(this);
+//        authController = new AuthController();
+//        parent = (HomeView) SwingUtilities.getWindowAncestor(this);
         buildView();
     }
 
