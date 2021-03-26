@@ -62,9 +62,9 @@ public class Admin extends User {
     }
 
     @Override
-    public User get() {
+    public void get() {
 //        gets the user from the database
-        return null;
+
     }
 
     @Override

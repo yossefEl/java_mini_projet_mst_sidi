@@ -29,7 +29,7 @@ public class UpdateDeleteClientView extends MainDashboardContentArea {
     InputField clientAddressField;
 
     PrimaryButton updateClientButton;
-    PrimaryButton cancelButton;
+    PrimaryButton deleteButton;
     PrimaryButton searchButton;
 
     public UpdateDeleteClientView() {
@@ -69,7 +69,7 @@ public class UpdateDeleteClientView extends MainDashboardContentArea {
                 new Rectangle(318, 286, 126, 35),
                 AppColors.blueColor
         );
-        cancelButton = new PrimaryButton("Supprimer",
+        deleteButton = new PrimaryButton("Supprimer",
                 new Rectangle(184, 286, 126, 35),
                 AppColors.redColor
         );
@@ -93,17 +93,106 @@ public class UpdateDeleteClientView extends MainDashboardContentArea {
         add(clientAddressLabel);
         add(clientAddressField);
         add(updateClientButton);
-        add(cancelButton);
+        add(deleteButton);
         add(searchButton);
         setVisible(true);
 
     }
 
 
-
     public void addClientActionListener(ActionListener cientActionListener) {
         updateClientButton.addActionListener(cientActionListener);
-        cancelButton.addActionListener(cientActionListener);
+        deleteButton.addActionListener(cientActionListener);
         searchButton.addActionListener(cientActionListener);
     }
+
+    public void clearForm() {
+        clientNumberField.setText(null);
+        clientFirstNameField.setText(null);
+        clientLastNameField.setText(null);
+        clientNumberField.setText(null);
+        dayBox.setSelectedItem(null);
+        monthBox.setSelectedItem(null);
+        yearBox.setSelectedItem(null);
+        clientAddressField.setText(null);
+
+
+    }
+
+
+    //getters and setters
+
+    public PrimaryButton getUpdateClientButton() {
+        return updateClientButton;
+    }
+
+    public PrimaryButton getDeleteButton() {
+        return deleteButton;
+    }
+
+    public PrimaryButton getSearchButton() {
+        return searchButton;
+    }
+
+
+    public String getClientNumber() {
+        return clientNumberField.getText();
+    }
+
+    public String getClientFirstName() {
+        return clientFirstNameField.getText();
+    }
+
+    public void setClientFirstName(String clientFirstName) {
+        this.clientFirstNameField.setText(clientFirstName);
+    }
+
+    public String getClientLastName() {
+        return clientLastNameField.getText();
+    }
+
+    public void setClientLastName(String clientLastName) {
+        this.clientLastNameField.setText(clientLastName);
+    }
+
+
+//    setters
+
+    public String getClientAddress() {
+        return clientAddressField.getText();
+    }
+
+    /**
+     * @return the composition of [day, month, year] combo boxes that the admin selected as
+     * a date with the un
+     */
+    //getters
+    public String getBirthday() {
+        //date format yyyy-MM-dd HH:mm:ss
+        return yearBox.getSelectedItem() + "-" +
+                (monthBox.getSelectedIndex() + 1) + "-" +
+                dayBox.getSelectedItem() ;
+    }
+
+    public void setClientNumber(String clientNumber) {
+        this.clientNumberField.setText(clientNumber);
+    }
+
+    public void setClientBirthday(String fullBirthday) {
+        System.out.println(fullBirthday);
+        if (fullBirthday != null) {
+            final String[] birdayArray = fullBirthday.split("-");
+            if (birdayArray.length >= 3) {
+                dayBox.setSelectedItem(birdayArray[2]);
+                monthBox.setSelectedIndex(Integer.parseInt(birdayArray[1]) - 1);
+                yearBox.setSelectedItem(birdayArray[0]);
+            }
+        }
+    }
+
+    public void setClientAddress(String clientAddress) {
+        this.clientAddressField.setText(clientAddress);
+    }
 }
+
+

@@ -31,7 +31,7 @@ public class AddClientView extends MainDashboardContentArea {
     private PrimaryButton addClientButton;
     private PrimaryButton cancelButton;
 
-    private JLabel successMessage;
+
 
     public AddClientView() {
         buildView();
@@ -77,13 +77,6 @@ public class AddClientView extends MainDashboardContentArea {
         );
 
 
-         successMessage = new JLabel("Le client a été enregistré avec succès", SwingConstants.LEFT);
-        successMessage.setForeground(Color.decode("#079f07"));
-        successMessage.setBounds(cancelButton.getX(),
-                addClientButton.getY() + 30,
-                getWidth() - cancelButton.getX(),
-                40);
-        successMessage.setVisible(false);
 
 //        composing the view
         add(title);
@@ -101,7 +94,7 @@ public class AddClientView extends MainDashboardContentArea {
         add(clientAddressField);
         add(addClientButton);
         add(cancelButton);
-        add(successMessage);
+
         setVisible(true);
     }
 
@@ -163,8 +156,7 @@ public class AddClientView extends MainDashboardContentArea {
         //date format yyyy-MM-dd HH:mm:ss
         return yearBox.getSelectedItem() + "-" +
                 (monthBox.getSelectedIndex() + 1) + "-" +
-                dayBox.getSelectedItem() +
-                " 00:00:00";
+                dayBox.getSelectedItem() ;
     }
 
     public PrimaryButton getAddClientButton() {
@@ -176,13 +168,9 @@ public class AddClientView extends MainDashboardContentArea {
     }
 
     public void showSuccessMessage() {
+        JLabel successMessage = new JLabel("Le client a été enregistré avec succès", SwingConstants.LEFT);
         successMessage.setVisible(true);
-        try {
-            TimeUnit.SECONDS.sleep(1);
-            successMessage.setVisible(false);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        JOptionPane.showConfirmDialog(this,successMessage,"Succès",JOptionPane.INFORMATION_MESSAGE);
 
     }
 }

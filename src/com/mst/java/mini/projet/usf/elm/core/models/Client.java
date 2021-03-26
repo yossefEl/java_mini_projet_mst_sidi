@@ -21,10 +21,12 @@ public class Client extends User {
 
     //---------- constructors ---------
     public Client() {
-        new DBHelper();
+        dbHelper = new DBHelper();
     }
 
-    public Client(String id, String firstName, String lastName, String birthday, String adress) {
+    public Client(
+            String id, String firstName, String lastName, String birthday, String adress) {
+
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -36,7 +38,8 @@ public class Client extends User {
 
     /**
      * inserts the client's data into database
-     * @throws SQLException if an error occurred during inserting data into database
+     *
+     * @throws SQLException           if an error occurred during inserting data into database
      * @throws ClassNotFoundException if the JDBC Class is not found or the path to it is broken
      */
     @Override
@@ -45,24 +48,28 @@ public class Client extends User {
         Connection connection = dbHelper.getConnection();
         Statement statement = connection.createStatement();
         statement.executeUpdate(
-                "INSERT INTO "+dbHelper.getDatabaseConfig().getTableName()+"(id, nom, prenom, date_naiss, adresse) " +
+                "INSERT INTO " + dbHelper.getDatabaseConfig().getTableName() + "(id, nom, prenom, date_naiss, adresse) " +
                         "VALUES ('" + id + "','" + firstName + "','" + lastName + "','" + birthday + "','" + address + "')");
         dbHelper.closeConnection();
 
     }
 
     @Override
-    public Client get() throws SQLException {
+    public void get() throws SQLException {
+        dbHelper.connectToDatabase();
         Connection connection = dbHelper.getConnection();
         Statement statement = connection.createStatement();
         ResultSet results = statement.executeQuery(
-                "SELECT FROM "+dbHelper.getDatabaseConfig().getTableName()+" where id=" + id);
+                "SELECT * FROM " + dbHelper.getDatabaseConfig().getTableName() + " where id=" + id);
 
         while (results.next()) {
-            System.out.println(results.getString("id"));
+            setId(results.getString(1));
+            setFirstName(results.getString(2));
+            setLastName(results.getString(3));
+            setBirthday(results.getString(4));
+            setAddress(results.getString(5));
         }
         dbHelper.closeConnection();
-        return this;
     }
 
     /**
@@ -90,7 +97,7 @@ public class Client extends User {
      */
     @Override
     public void update() throws SQLException {
-
+        dbHelper.connectToDatabase();
         Connection connection = dbHelper.getConnection();
         Statement statement = connection.createStatement();
         statement.executeUpdate("UPDATE clients SET   nom='" + firstName + "', prenom='" + lastName + "', date_naiss='" + birthday + "', adresse='" + address + "' where id='" + id + "'");
@@ -102,8 +109,10 @@ public class Client extends User {
      * @return true if the values of this client instance are valid [isBlackOrNull for each is false]
      * else it returns false
      */
+
+
     public boolean validate() {
-        return  !isBlankOrNull(id) &&
+        return !isBlankOrNull(id) &&
                 !isBlankOrNull(firstName) &&
                 !isBlankOrNull(lastName) &&
                 !isBlankOrNull(birthday) &&
@@ -118,22 +127,47 @@ public class Client extends User {
      * - null
      * otherwise it returns true
      */
-    private boolean isBlankOrNull(String attribute) {
+    public boolean isBlankOrNull(String attribute) {
         return (attribute == null ||
                 Objects.equals(attribute, "") ||
                 Objects.equals(attribute, " ") ||
                 attribute.isEmpty());
     }
 
+
+    public boolean existInDatabase() {
+
+        try {
+            dbHelper.connectToDatabase();
+            Connection connection = dbHelper.getConnection();
+
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery(
+                    "SELECT * FROM " + dbHelper.getDatabaseConfig().getTableName() + " where id=" + id);
+            boolean exist = false;
+            while (results.next()) {
+                exist = true;
+            }
+            return exist;
+
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            return false;
+        }
+
+
+    }
+
     @Override
     public String toString() {
         return
                 ", id='" + id + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", birthday='" + birthday + '\'' +
-                ", address='" + address + '\''
-               ;
+                        ", firstName='" + firstName + '\'' +
+                        ", lastName='" + lastName + '\'' +
+                        ", birthday='" + birthday + '\'' +
+                        ", address='" + address + '\''
+                ;
     }
     //---------- getters and setters ---------
 

@@ -49,7 +49,7 @@ public class BaseAppMVC {
         // //************* Home ************* //
         homeView = new HomeView(dashboardView, loginView, configureDatabaseView);
 
-        //
+        //auth controller
 
         authController.setHomeView(homeView);
 
