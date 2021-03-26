@@ -6,6 +6,7 @@ import com.mst.java.mini.projet.usf.elm.helpers.DateTimeHelper;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class UpdateDeleteClientView extends MainDashboardContentArea {
 
@@ -27,7 +28,7 @@ public class UpdateDeleteClientView extends MainDashboardContentArea {
     InputLabel clientAddressLabel;
     InputField clientAddressField;
 
-    PrimaryButton addClientButton;
+    PrimaryButton updateClientButton;
     PrimaryButton cancelButton;
     PrimaryButton searchButton;
 
@@ -50,7 +51,7 @@ public class UpdateDeleteClientView extends MainDashboardContentArea {
         clientLastNameField = new InputField(new Rectangle(184, 148, 260, 35));
 
         clientBirthdayLabel = new InputLabel("Date naissance", new Rectangle(50, 200, 103, 17));
-        dayBox = new JComboBox<>(DateTimeHelper.getDays(1, 2012));
+        dayBox = new JComboBox<>(DateTimeHelper.getDays());
         dayBox.setBounds(184, 192, 68, 35);
         dayBox.setBackground(AppColors.lightGreyColor);
         monthBox = new JComboBox<>(DateTimeHelper.getMonths());
@@ -64,7 +65,7 @@ public class UpdateDeleteClientView extends MainDashboardContentArea {
         clientAddressLabel = new InputLabel("Adresse", new Rectangle(50, 244, 55, 17));
         clientAddressField = new InputField(new Rectangle(184, 236, 260, 35));
 
-        addClientButton = new PrimaryButton("Modifier",
+        updateClientButton = new PrimaryButton("Modifier",
                 new Rectangle(318, 286, 126, 35),
                 AppColors.blueColor
         );
@@ -91,10 +92,18 @@ public class UpdateDeleteClientView extends MainDashboardContentArea {
         add(yearBox);
         add(clientAddressLabel);
         add(clientAddressField);
-        add(addClientButton);
+        add(updateClientButton);
         add(cancelButton);
         add(searchButton);
         setVisible(true);
 
+    }
+
+
+
+    public void addClientActionListener(ActionListener cientActionListener) {
+        updateClientButton.addActionListener(cientActionListener);
+        cancelButton.addActionListener(cientActionListener);
+        searchButton.addActionListener(cientActionListener);
     }
 }

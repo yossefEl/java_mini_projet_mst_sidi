@@ -9,12 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Sidebar extends JPanel {
-    private JLabel appLogo;
-    private TitleLabel appName;
     public SidebarItem addClientSidebarItem;
     public SidebarItem updateDeleteSidebarItem;
     public SidebarItem showClientsSidebarItem;
-    public SidebarItem configureDBSidebarItem;
+    public SidebarItem logoutSidebarItem;
     public ArrayList<SidebarItem> sidebarItems;
 
 
@@ -26,21 +24,23 @@ public class Sidebar extends JPanel {
     private void buildSidebar() {
 
         //init components
-        appLogo=new JLabel(AssetsProvider.fsteLogo78);
+        JLabel appLogo = new JLabel(AssetsProvider.fsteLogo78);
         appLogo.setBounds(47,4,78,78);
 
-        appName=new TitleLabel("Application de\n","Gestion des Clients",11);
+        TitleLabel appName = new TitleLabel("Application de\n", "Gestion des Clients", 11);
         appName.setBounds(23,83,126,30);
 
         addClientSidebarItem=new SidebarItem(new Point(0,130),"Ajouter un client");
         addClientSidebarItem.setActive(true);
         updateDeleteSidebarItem=new SidebarItem(new Point(0,160),"Modifier /Supprimer client");
         showClientsSidebarItem=new SidebarItem(new Point(0,190),"Afficher les clients");
-        configureDBSidebarItem=new SidebarItem(new Point(0,220),"Configurer");
-        sidebarItems = new ArrayList<>(Arrays.asList(addClientSidebarItem,
+        logoutSidebarItem=new SidebarItem(new Point(0,220),"Déconnexion");
+        logoutSidebarItem.setIsView(false);
+        sidebarItems = new ArrayList<>(Arrays.asList(
+                addClientSidebarItem,
                 updateDeleteSidebarItem,
                 showClientsSidebarItem,
-                configureDBSidebarItem
+                logoutSidebarItem
                 ));
         //composing the U
         add(appLogo);
@@ -48,7 +48,7 @@ public class Sidebar extends JPanel {
         add(addClientSidebarItem);
         add(updateDeleteSidebarItem);
         add(showClientsSidebarItem);
-        add(configureDBSidebarItem);
+        add(logoutSidebarItem);
         setLayout(null);
         setBounds(0, 0, 182, 512);
         setBackground(AppColors.darkGreyColor);

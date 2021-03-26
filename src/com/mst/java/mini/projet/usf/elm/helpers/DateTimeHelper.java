@@ -8,14 +8,12 @@ import java.util.GregorianCalendar;
 public class DateTimeHelper {
     Date date=new Date();
 
-    public static String[] getDays(int monthOfYear, int year) {
-        YearMonth yearMonthObject = YearMonth.of(year, monthOfYear);
-        int daysInMonthLength = yearMonthObject.lengthOfMonth();
-        String[] daysInMonth = new String[daysInMonthLength];
-        for (int i = 0; i < daysInMonthLength; i++) {
-            daysInMonth[i] = String.valueOf(daysInMonthLength + 1);
+    public static String[] getDays() {
+        String[] days = new String[31];
+        for (int i=0;i<=30;i++){
+            days[i]=String.valueOf(i+1);
         }
-        return daysInMonth;
+        return days;
     }
 
     public static String[] getMonths() {
@@ -36,9 +34,13 @@ public class DateTimeHelper {
 
     public static String[] getYears() {
         Calendar calendar = new GregorianCalendar();
-        final int currentYear = calendar.get(Calendar.YEAR) - 1900;
-
-        return new String[]{"2010","2020","®2020"};
+        final int currentYear = calendar.get(Calendar.YEAR);
+        System.out.println(calendar.get(Calendar.YEAR));
+        String[] years =new String[currentYear-1900];
+        for(int i=0;i<=currentYear-1901;i++){
+            years[i]=String.valueOf(1900+i);
+        }
+        return years;
     }
 
 }

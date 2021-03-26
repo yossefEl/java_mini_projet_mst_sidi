@@ -10,16 +10,17 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class ShowClientsView extends MainDashboardContentArea {
 
     public DefaultTableModel tableModel;
     public JTable table;
 
-    JRadioButton filterByID;
-    JRadioButton filterByName;
-    JRadioButton filterByBirthday;
-    ButtonGroup filterClientsCheckGroup;
+    private JRadioButton filterByID;
+    private JRadioButton filterByName;
+    private JRadioButton filterByBirthday;
+    private ButtonGroup filterClientsCheckGroup;
 
     PrimaryButton refreshFilteredClientsListButton;
 
@@ -87,5 +88,16 @@ public class ShowClientsView extends MainDashboardContentArea {
 
 
     }
+
+    public void addClientActionListener(ActionListener cientActionListener) {
+        refreshFilteredClientsListButton.addActionListener(cientActionListener);
+
+    }
+
+    public PrimaryButton getRefreshFilteredClientsListButton() {
+        return refreshFilteredClientsListButton;
+    }
+
+
 
 }

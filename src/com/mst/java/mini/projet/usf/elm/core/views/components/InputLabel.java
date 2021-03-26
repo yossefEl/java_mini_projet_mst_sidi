@@ -8,7 +8,7 @@ import java.awt.*;
 public class InputLabel extends JLabel {
     public InputLabel(String text,Rectangle bounds ){
         super(text);
-        setFont(new Font("Arial",Font.BOLD,15));
+        setFont(new Font("Arial",Font.BOLD,13));
         setForeground(AppColors.black50Color);
         setBounds(bounds);
 

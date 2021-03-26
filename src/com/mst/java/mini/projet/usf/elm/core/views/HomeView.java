@@ -6,16 +6,15 @@ import java.util.Arrays;
 
 public class HomeView extends JFrame {
 
-    ArrayList<JPanel> items;
-    private DashboardView dashboardView;
-    private LoginView loginView;
-    private ConfigureDatabaseView configureDatabaseView;
+    private final ArrayList<JPanel> items;
+    private final DashboardView dashboardView;
+    private final LoginView loginView;
+    private final ConfigureDatabaseView configureDatabaseView;
 
 
     public HomeView(DashboardView dashboardView,
                     LoginView loginView,
                     ConfigureDatabaseView configureDatabaseView) {
-        System.out.println("home initialized");
         this.dashboardView = dashboardView;
         this.loginView = loginView;
         this.configureDatabaseView = configureDatabaseView;

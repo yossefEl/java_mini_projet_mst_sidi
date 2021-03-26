@@ -16,11 +16,10 @@ public class SidebarController {
     public SidebarController() {
 
     }
-
     public SidebarController(DashboardView parentView) {
         this.parentView = parentView;
-        contentAreaItems = parentView.contentAreaItems;
-        sidebarItems = parentView.sidebar.sidebarItems;
+        contentAreaItems = parentView.getContentAreaItems();
+        sidebarItems = parentView.getSidebar().sidebarItems;
         initializeSidebarItemsListeners();
         initializeContentItems();
     }
@@ -30,8 +29,8 @@ public class SidebarController {
             DashboardView parentView
     ) {
         this.parentView = parentView;
-        contentAreaItems = parentView.contentAreaItems;
-        sidebarItems = parentView.sidebar.sidebarItems;
+        contentAreaItems = parentView.getContentAreaItems();
+        sidebarItems = parentView.getSidebar().sidebarItems;
         initializeSidebarItemsListeners();
         initializeContentItems();
     }
@@ -40,10 +39,16 @@ public class SidebarController {
     private void initializeSidebarItemsListeners() {
         for (SidebarItem item : sidebarItems
         ) {
-
             item.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
-                    handleSidebarSelection(item);
+                    if(item.isView())
+                        handleSidebarSelection(item);
+                    else{
+                       if(item.getItemLabel().equalsIgnoreCase("Déconnexion")){
+                        //TODO confirm loggout and if Yes => show( loginView )
+                           System.out.println();
+                       }
+                    }
                 }
             });
         }
@@ -54,7 +59,6 @@ public class SidebarController {
         ) {
             item.setVisible(false);
            parentView.add(item);
-
         }
         contentAreaItems.get(0).setVisible(true);
     }
@@ -68,15 +72,12 @@ public class SidebarController {
 
     private void setActiveSidebarItem(SidebarItem selectedItem) {
         for (SidebarItem sidebarItem : sidebarItems) {
-
             if (sidebarItem == selectedItem) {
                 selectedItem.setActive(true);
             } else {
                 sidebarItem.setActive(false);
             }
-
         }
-
         parentView.repaint();
     }
 

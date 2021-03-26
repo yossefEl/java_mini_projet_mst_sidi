@@ -15,14 +15,13 @@ public class AuthController {
     //------- attributes ---------
     private final Admin admin;
     private final LoginView loginView;
-    private final HomeView homeView;
+    private  HomeView homeView;
 
 
     //-------constructors ---------
-    public AuthController(LoginView loginView,HomeView homeView) {
+    public AuthController(LoginView loginView) {
         admin = new Admin();
         this.loginView = loginView;
-        this.homeView=homeView;
         this.loginView.addAuthActionListener(new AuthActionListener());
     }
 
@@ -30,6 +29,10 @@ public class AuthController {
     //-------getters and setters ---------
     public Admin getAdmin() {
             return admin;
+    }
+
+    public void setHomeView(HomeView homeView) {
+        this.homeView = homeView;
     }
 
 

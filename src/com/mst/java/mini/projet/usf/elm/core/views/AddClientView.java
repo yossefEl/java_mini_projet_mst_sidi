@@ -5,29 +5,33 @@ import com.mst.java.mini.projet.usf.elm.helpers.AppColors;
 import com.mst.java.mini.projet.usf.elm.helpers.DateTimeHelper;
 
 import javax.swing.*;
-import java.awt.Rectangle;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.util.concurrent.TimeUnit;
 
 public class AddClientView extends MainDashboardContentArea {
 
-    InputLabel clientNumberLabel;
-    InputField clientNumberField;
+    private InputLabel clientNumberLabel;
+    private InputField clientNumberField;
 
-    InputLabel clientFirstNameLabel;
-    InputField clientFirstNameField;
+    private InputLabel clientFirstNameLabel;
+    private InputField clientFirstNameField;
 
-    InputLabel clientLastNameLabel;
-    InputField clientLastNameField;
+    private InputLabel clientLastNameLabel;
+    private InputField clientLastNameField;
 
-    InputLabel clientBirthdayLabel;
-    JComboBox<String> dayBox;
-    JComboBox<String> monthBox;
-    JComboBox<String> yearBox;
+    private InputLabel clientBirthdayLabel;
+    private JComboBox<String> dayBox;
+    private JComboBox<String> monthBox;
+    private JComboBox<String> yearBox;
 
-    InputLabel clientAddressLabel;
-    InputField clientAddressField;
+    private InputLabel clientAddressLabel;
+    private InputField clientAddressField;
 
-    PrimaryButton addClientButton;
-    PrimaryButton cancelButton;
+    private PrimaryButton addClientButton;
+    private PrimaryButton cancelButton;
+
+    private JLabel successMessage;
 
     public AddClientView() {
         buildView();
@@ -49,7 +53,7 @@ public class AddClientView extends MainDashboardContentArea {
         clientLastNameField = new InputField(new Rectangle(266, 148, 260, 35));
 
         clientBirthdayLabel = new InputLabel("Date naissance", new Rectangle(111, 200, 103, 17));
-        dayBox = new JComboBox<>(DateTimeHelper.getDays(1, 2012));
+        dayBox = new JComboBox<>(DateTimeHelper.getDays());
         dayBox.setBounds(266, 192, 68, 35);
         dayBox.setBackground(AppColors.lightGreyColor);
         monthBox = new JComboBox<>(DateTimeHelper.getMonths());
@@ -72,6 +76,15 @@ public class AddClientView extends MainDashboardContentArea {
                 AppColors.redColor
         );
 
+
+         successMessage = new JLabel("Le client a été enregistré avec succès", SwingConstants.LEFT);
+        successMessage.setForeground(Color.decode("#079f07"));
+        successMessage.setBounds(cancelButton.getX(),
+                addClientButton.getY() + 30,
+                getWidth() - cancelButton.getX(),
+                40);
+        successMessage.setVisible(false);
+
 //        composing the view
         add(title);
         add(clientNumberLabel);
@@ -88,6 +101,88 @@ public class AddClientView extends MainDashboardContentArea {
         add(clientAddressField);
         add(addClientButton);
         add(cancelButton);
+        add(successMessage);
         setVisible(true);
+    }
+
+    /**
+     * adds an action listener to catch admin actions [add and clear|cancel]
+     *
+     * @param clientActionListener the action listener of the client Controller
+     */
+    public void addClientActionListener(ActionListener clientActionListener) {
+        addClientButton.addActionListener(clientActionListener);
+        cancelButton.addActionListener(clientActionListener);
+
+    }
+
+
+    /**
+     * clears the user inputs
+     */
+    public void clearForm() {
+        clientNumberField.setText(null);
+        clientFirstNameField.setText(null);
+        clientLastNameField.setText(null);
+        clientNumberField.setText(null);
+        dayBox.setSelectedItem(null);
+        monthBox.setSelectedItem(null);
+        yearBox.setSelectedItem(null);
+        clientAddressField.setText(null);
+
+
+    }
+
+
+    //getters
+
+    public String getClientNumber() {
+        return clientNumberField.getText();
+    }
+
+    public String getClientFirstName() {
+        return clientFirstNameField.getText();
+    }
+
+    public String getClientLastName() {
+        return clientLastNameField.getText();
+    }
+
+    public String getClientAddress() {
+        return clientAddressField.getText();
+    }
+
+    /**
+     * @return the composition of [day, month, year] combo boxes that the admin selected as
+     * a date with the un
+     */
+
+
+    //getters
+    public String getBirthday() {
+        //date format yyyy-MM-dd HH:mm:ss
+        return yearBox.getSelectedItem() + "-" +
+                (monthBox.getSelectedIndex() + 1) + "-" +
+                dayBox.getSelectedItem() +
+                " 00:00:00";
+    }
+
+    public PrimaryButton getAddClientButton() {
+        return addClientButton;
+    }
+
+    public PrimaryButton getCancelButton() {
+        return cancelButton;
+    }
+
+    public void showSuccessMessage() {
+        successMessage.setVisible(true);
+        try {
+            TimeUnit.SECONDS.sleep(1);
+            successMessage.setVisible(false);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 }

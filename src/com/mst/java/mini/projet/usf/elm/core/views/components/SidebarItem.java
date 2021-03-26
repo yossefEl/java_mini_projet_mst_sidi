@@ -6,21 +6,23 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class SidebarItem extends JPanel{
+public class SidebarItem extends JPanel {
+    private final JLabel itemLabel;
     private boolean isActive;
     private String itemLabelText;
-    private JLabel itemLabel;
+    private boolean isView;
 
     public SidebarItem(Point position, String itemLabelText) {
 
         setLayout(new BorderLayout());
-        itemLabel= new JLabel(itemLabelText);
-        itemLabel.setFont(new Font("Arial",Font.BOLD,12));
-        itemLabel.setBorder(new EmptyBorder(0,10,0,0));
+        itemLabel = new JLabel(itemLabelText);
+        itemLabel.setFont(new Font("Arial", Font.BOLD, 12));
+        itemLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
         add(itemLabel, BorderLayout.CENTER);
         setBounds(position.x, position.y, 182, 30);
         setActive(false);
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        setIsView(true);
 
     }
 
@@ -30,10 +32,10 @@ public class SidebarItem extends JPanel{
 
     public void setActive(boolean active) {
         isActive = active;
-        if(active){
+        if (active) {
             setBackground(AppColors.blueColor);
             itemLabel.setForeground(AppColors.whiteColor);
-        }else{
+        } else {
             setBackground(AppColors.darkGreyColor);
             itemLabel.setForeground(AppColors.blueColor);
         }
@@ -48,5 +50,11 @@ public class SidebarItem extends JPanel{
     }
 
 
+    public void setIsView(boolean isView) {
+        this.isView = isView;
+    }
 
+    public boolean isView() {
+        return isView;
+    }
 }

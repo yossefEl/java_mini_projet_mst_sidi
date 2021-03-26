@@ -7,29 +7,29 @@ import com.mst.java.mini.projet.usf.elm.core.views.components.SidebarItem;
 import com.mst.java.mini.projet.usf.elm.helpers.AppColors;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class DashboardView extends JPanel implements ActionListener {
-    public Sidebar sidebar;
-    public MainDashboardContentArea mainContent;
-    public SidebarController sidebarController;
-    public final ArrayList<MainDashboardContentArea> contentAreaItems = new ArrayList<>(
-            Arrays.asList(new AddClientView(),
-                    new UpdateDeleteClientView(),
-                    new ShowClientsView(),
-                    new UpdateDBConfigView()
-            )
-    );
+public class DashboardView extends JPanel {
+    private ArrayList<MainDashboardContentArea> contentAreaItems;
+    private Sidebar sidebar;
+    private SidebarController sidebarController;
+    private AddClientView addClientView;
+    private UpdateDeleteClientView updateDeleteClientView;
+    private ShowClientsView showClientsView;
 
-    public DashboardView() {
+    public DashboardView(AddClientView addClientView,
+                         UpdateDeleteClientView updateDeleteClientView,
+                         ShowClientsView showClientsView) {
+        this.addClientView = addClientView;
+        this.updateDeleteClientView = updateDeleteClientView;
+        this.showClientsView = showClientsView;
         buildView();
-
     }
+
+
 
     private void buildView() {
 
@@ -39,23 +39,21 @@ public class DashboardView extends JPanel implements ActionListener {
         //init view
         setLayout(null);
         setBackground(AppColors.whiteColor);
+
         //init components
         sidebar = new Sidebar();
-        mainContent = contentAreaItems.get(0);
+        contentAreaItems = new ArrayList<>(Arrays.asList(
+                addClientView, updateDeleteClientView, showClientsView
+        ));
 
         //composing the view
         add(sidebar);
-        add(mainContent);
+        add(addClientView);
+        sidebarController.initialize(this);
+        initializeSidebarItemsListeners();
         setSize(819, 512);
         setVisible(true);
 
-
-        sidebarController.initialize(this);
-        initializeSidebarItemsListeners();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
 
     }
 
@@ -70,4 +68,46 @@ public class DashboardView extends JPanel implements ActionListener {
             });
         }
     }
+
+
+
+    //getters
+
+    public Sidebar getSidebar() {
+        return sidebar;
+    }
+
+    public ArrayList<MainDashboardContentArea> getContentAreaItems() {
+        return contentAreaItems;
+    }
+
+    public AddClientView getAddClientView() {
+        return addClientView;
+    }
+
+    public UpdateDeleteClientView getUpdateDeleteClientView() {
+        return updateDeleteClientView;
+    }
+
+    public ShowClientsView getShowClientsView() {
+        return showClientsView;
+    }
+
+    //setters
+
+    public void setUpdateDeleteClientView(UpdateDeleteClientView updateDeleteClientView) {
+        this.updateDeleteClientView = updateDeleteClientView;
+    }
+
+
+    public void setShowClientsView(ShowClientsView showClientsView) {
+        this.showClientsView = showClientsView;
+    }
+
+
+    public void setAddClientView(AddClientView addClientView) {
+        this.addClientView = addClientView;
+    }
+
+
 }

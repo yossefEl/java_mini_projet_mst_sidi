@@ -1,12 +1,11 @@
 package com.mst.java.mini.projet.usf.elm;
 
-import com.mst.java.mini.projet.usf.elm.core.controllers.AppController;
-import com.mst.java.mini.projet.usf.elm.core.views.HomeView;
+import com.mst.java.mini.projet.usf.elm.core.controllers.BaseAppMVC;
 
 public class Main {
 
     public static void main(String[] args) {
-       AppController baseAppController=new AppController();
+       BaseAppMVC baseAppController=new BaseAppMVC();
        baseAppController.start();
 
 
