@@ -53,7 +53,6 @@ public class ShowClientsView extends MainDashboardContentArea {
         );
 
         sortClientsCheckGroup = new ButtonGroup();
-
         sortClientsCheckGroup.add(sortByID);
         sortClientsCheckGroup.add(sortByName);
         sortClientsCheckGroup.add(sortByBirthday);
@@ -67,7 +66,8 @@ public class ShowClientsView extends MainDashboardContentArea {
 
         String[] columnNames = new String[]{"Numero", "Nom", "Prénom", "Date de naissance", "Adresse"};
         tableModel = new DefaultTableModel(columnNames, 0)  {
-            @Override
+            @SuppressWarnings("unchecked")
+			@Override
             public Class getColumnClass(int column) {
                 if (column == 0) {
                     return Integer.class;
@@ -80,6 +80,7 @@ public class ShowClientsView extends MainDashboardContentArea {
 
         table = new JTable(tableModel);
         table.setAutoCreateRowSorter(true);
+        table.setBackground(Color.white);
 
         DefaultTableCellRenderer NumberLeftRenderer = new DefaultTableCellRenderer();
         NumberLeftRenderer.setHorizontalAlignment(JLabel.LEFT);

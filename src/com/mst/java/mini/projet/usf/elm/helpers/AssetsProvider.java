@@ -13,7 +13,6 @@ import static com.mst.java.mini.projet.usf.elm.helpers.PathHelper.PROJECT_ASSETS
  */
 public class AssetsProvider {
     //db.config contains our database connection credentials
-    //DON'T EDIT OR REMOVE THIS FILE MANUALLY
     public final static File dbConfigFile = new File(
             PROJECT_ASSETS_PATH + "db.config");
     public final static ImageIcon fsteLogo78 = new ImageIcon(

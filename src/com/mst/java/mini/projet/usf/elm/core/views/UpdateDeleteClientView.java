@@ -173,7 +173,7 @@ public class UpdateDeleteClientView extends MainDashboardContentArea {
      */
 
     public String getBirthday() {
-        //date format yyyy-MM-dd HH:mm:ss
+        //date format yyyy-MM-dd
         return yearBox.getSelectedItem() + "-" +
                 (monthBox.getSelectedIndex() + 1) + "-" +
                 dayBox.getSelectedItem() ;
@@ -184,11 +184,12 @@ public class UpdateDeleteClientView extends MainDashboardContentArea {
     }
 
     public void setClientBirthday(String fullBirthday) {
-
+   
         if (fullBirthday != null) {
             final String[] birdayArray = fullBirthday.split("-");
             if (birdayArray.length >= 3) {
-                dayBox.setSelectedItem(birdayArray[2]);
+            
+                dayBox.setSelectedIndex(Integer.parseInt(birdayArray[2])-1);
                 monthBox.setSelectedIndex(Integer.parseInt(birdayArray[1]) - 1);
                 yearBox.setSelectedItem(birdayArray[0]);
             }

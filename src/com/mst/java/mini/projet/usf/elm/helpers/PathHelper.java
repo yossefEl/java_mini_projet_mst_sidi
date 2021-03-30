@@ -5,7 +5,6 @@ package com.mst.java.mini.projet.usf.elm.helpers;
 // so to make that all the assets and access files requests works properly
 // This why this class helper created ..it's for handling paths
 
-import javax.swing.*;
 import java.util.regex.Matcher;
 
 public class PathHelper {

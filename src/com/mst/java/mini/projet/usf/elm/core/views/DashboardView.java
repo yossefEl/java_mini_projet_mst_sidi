@@ -3,12 +3,9 @@ package com.mst.java.mini.projet.usf.elm.core.views;
 import com.mst.java.mini.projet.usf.elm.core.controllers.SidebarController;
 import com.mst.java.mini.projet.usf.elm.core.views.components.MainDashboardContentArea;
 import com.mst.java.mini.projet.usf.elm.core.views.components.Sidebar;
-import com.mst.java.mini.projet.usf.elm.core.views.components.SidebarItem;
 import com.mst.java.mini.projet.usf.elm.helpers.AppColors;
 
 import javax.swing.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 
