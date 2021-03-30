@@ -17,6 +17,7 @@ public class PrimaryButton extends JButton {
         setOpaque(true);
         if (PathHelper.isWindows()) {
             //this decoration is only working under Windows OS
+            //On MacOs Big Sur version (in my case) it is not valid
             setBackground(backgroundColor);
             setForeground(AppColors.whiteColor);
         }

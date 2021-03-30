@@ -39,6 +39,7 @@ public class Client implements User {
 
     /**
      * this method is for getting all the clients stored in the database -> clients table
+     * this method is related to the client Class but not to a specific client this why it's declared static
      *
      * @return List of Clients
      */
