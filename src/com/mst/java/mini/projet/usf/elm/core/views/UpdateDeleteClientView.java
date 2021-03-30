@@ -168,8 +168,7 @@ public class UpdateDeleteClientView extends MainDashboardContentArea {
     }
 
     /**
-     * @return the composition of [day, month, year] combo boxes that the admin selected as
-     * a date with the un
+     * @return the composition of [day, month, year] combo boxes
      */
 
     public String getBirthday() {
