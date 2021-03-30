@@ -118,7 +118,7 @@ public class Client implements User {
         Connection connection = dbHelper.getConnection();
         Statement statement = connection.createStatement();
         statement.executeUpdate(
-                "DELETE FROM clients where id=" + id);
+                "DELETE FROM "+ dbHelper.getDatabaseConfig().getTableName() +" where id=" + id);
         dbHelper.closeConnection();
     }
 
@@ -134,7 +134,7 @@ public class Client implements User {
         dbHelper.connectToDatabase();
         Connection connection = dbHelper.getConnection();
         Statement statement = connection.createStatement();
-        statement.executeUpdate("UPDATE clients SET   nom='" + firstName + "', prenom='" + lastName + "', date_naiss='" + birthday + "', adresse='" + address + "' where id='" + id + "'");
+        statement.executeUpdate("UPDATE "+ dbHelper.getDatabaseConfig().getTableName() +" SET   nom='" + firstName + "', prenom='" + lastName + "', date_naiss='" + birthday + "', adresse='" + address + "' where id='" + id + "'");
         dbHelper.closeConnection();
     }
 

@@ -1,9 +1,11 @@
 package com.mst.java.mini.projet.usf.elm.core.views;
 
+import com.mst.java.mini.projet.usf.elm.core.views.components.PrimaryButton;
 import com.mst.java.mini.projet.usf.elm.helpers.AppColors;
 import com.mst.java.mini.projet.usf.elm.helpers.AssetsProvider;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class LoginView extends JPanel {
@@ -48,8 +50,10 @@ public class LoginView extends JPanel {
 //        passwordField.setUI(new HintTextFieldUI("Password",true,AppColors.borderGreyColor));
 
 
-        loginButton = new JButton("Se Connecter");
-        loginButton.setBounds(216, 349, 388, 35);
+        loginButton = new PrimaryButton("Se Connecter"
+                ,new Rectangle(216, 349, 388, 35)
+                ,AppColors.blueColor);
+
 
 
         //composing the view

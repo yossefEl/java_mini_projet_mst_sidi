@@ -41,8 +41,11 @@ public class ShowClientsView extends MainDashboardContentArea {
         sortLabel.setForeground(AppColors.blueColor);
 
         sortByID = new JRadioButton("Num", false);
+        sortByID.setBackground(Color.white);
         sortByName = new JRadioButton("Nom", false);
+        sortByName.setBackground(Color.white);
         sortByBirthday = new JRadioButton("Date naissance", false);
+        sortByBirthday.setBackground(Color.white);
 
         refreshClientsListButton = new PrimaryButton("Actualiser",
                 new Rectangle(0, 0, 126, 35),
