@@ -5,6 +5,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+/**
+ * This class is for purpose to handle the date time functions in this app
+ */
 public class DateTimeHelper {
     Date date=new Date();
 
@@ -35,7 +38,7 @@ public class DateTimeHelper {
     public static String[] getYears() {
         Calendar calendar = new GregorianCalendar();
         final int currentYear = calendar.get(Calendar.YEAR);
-        System.out.println(calendar.get(Calendar.YEAR));
+
         String[] years =new String[currentYear-1900];
         for(int i=0;i<=currentYear-1901;i++){
             years[i]=String.valueOf(1900+i);

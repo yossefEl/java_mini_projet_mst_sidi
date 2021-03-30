@@ -100,20 +100,28 @@ public class UpdateDeleteClientView extends MainDashboardContentArea {
     }
 
 
-    public void addClientActionListener(ActionListener cientActionListener) {
-        updateClientButton.addActionListener(cientActionListener);
-        deleteButton.addActionListener(cientActionListener);
-        searchButton.addActionListener(cientActionListener);
+    /**
+     * adds an action listeners to the clickable elements in this view
+     *
+     * @param clientActionListener comes from the ClientController
+     */
+    public void addClientActionListener(ActionListener clientActionListener) {
+        updateClientButton.addActionListener(clientActionListener);
+        deleteButton.addActionListener(clientActionListener);
+        searchButton.addActionListener(clientActionListener);
     }
 
+    /**
+     * Clears the fields
+     */
     public void clearForm() {
         clientNumberField.setText(null);
         clientFirstNameField.setText(null);
         clientLastNameField.setText(null);
         clientNumberField.setText(null);
-        dayBox.setSelectedItem(null);
-        monthBox.setSelectedItem(null);
-        yearBox.setSelectedItem(null);
+        dayBox.setSelectedIndex(0);
+        monthBox.setSelectedIndex(0);
+        yearBox.setSelectedIndex(0);
         clientAddressField.setText(null);
 
 
@@ -155,9 +163,6 @@ public class UpdateDeleteClientView extends MainDashboardContentArea {
         this.clientLastNameField.setText(clientLastName);
     }
 
-
-//    setters
-
     public String getClientAddress() {
         return clientAddressField.getText();
     }
@@ -166,7 +171,7 @@ public class UpdateDeleteClientView extends MainDashboardContentArea {
      * @return the composition of [day, month, year] combo boxes that the admin selected as
      * a date with the un
      */
-    //getters
+
     public String getBirthday() {
         //date format yyyy-MM-dd HH:mm:ss
         return yearBox.getSelectedItem() + "-" +
@@ -179,7 +184,7 @@ public class UpdateDeleteClientView extends MainDashboardContentArea {
     }
 
     public void setClientBirthday(String fullBirthday) {
-        System.out.println(fullBirthday);
+
         if (fullBirthday != null) {
             final String[] birdayArray = fullBirthday.split("-");
             if (birdayArray.length >= 3) {

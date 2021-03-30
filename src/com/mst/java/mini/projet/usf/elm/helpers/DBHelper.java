@@ -7,6 +7,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
+/**
+ * This class manages the database connections as well as its configurations
+ */
 public class DBHelper {
 
     //------------- attributes -------------
@@ -20,7 +23,7 @@ public class DBHelper {
         try {
             databaseConfig.readConfiguration();
         } catch (Exception e) {
-            System.out.println();
+
         }
     }
 

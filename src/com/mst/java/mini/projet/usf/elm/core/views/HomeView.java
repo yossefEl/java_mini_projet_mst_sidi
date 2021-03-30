@@ -16,6 +16,7 @@ public class HomeView extends JFrame {
                     LoginView loginView,
                     ConfigureDatabaseView configureDatabaseView) {
         this.dashboardView = dashboardView;
+        dashboardView.setHomeView(this);
         this.loginView = loginView;
         this.configureDatabaseView = configureDatabaseView;
         items = new ArrayList<>(Arrays.asList(dashboardView, loginView, configureDatabaseView));

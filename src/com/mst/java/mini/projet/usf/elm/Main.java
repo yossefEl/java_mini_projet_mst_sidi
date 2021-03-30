@@ -1,6 +1,6 @@
 package com.mst.java.mini.projet.usf.elm;
 
-import com.mst.java.mini.projet.usf.elm.core.controllers.BaseAppMVC;
+import com.mst.java.mini.projet.usf.elm.core.BaseAppMVC;
 
 public class Main {
 

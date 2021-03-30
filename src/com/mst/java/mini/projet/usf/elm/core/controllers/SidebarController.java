@@ -1,8 +1,10 @@
 package com.mst.java.mini.projet.usf.elm.core.controllers;
 
 import com.mst.java.mini.projet.usf.elm.core.views.DashboardView;
+import com.mst.java.mini.projet.usf.elm.core.views.HomeView;
 import com.mst.java.mini.projet.usf.elm.core.views.components.MainDashboardContentArea;
 import com.mst.java.mini.projet.usf.elm.core.views.components.SidebarItem;
+import com.mst.java.mini.projet.usf.elm.helpers.DialogHelper;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -41,14 +43,7 @@ public class SidebarController {
         ) {
             item.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
-                    if(item.isView())
-                        handleSidebarSelection(item);
-                    else{
-                       if(item.getItemLabel().equalsIgnoreCase("Déconnexion")){
-                        //TODO confirm loggout and if Yes => show( loginView )
-                           System.out.println();
-                       }
-                    }
+                           handleSidebarSelection(item);
                 }
             });
         }
@@ -65,8 +60,20 @@ public class SidebarController {
 
 
     public void handleSidebarSelection(SidebarItem selectedItem) {
+        System.out.println(selectedItem.getItemLabelText());
+        if(selectedItem.getItemLabelText().equalsIgnoreCase("Déconnexion")){
+            final int confirmation= DialogHelper.showConfirmationDialog(
+                    parentView,
+                    "Êtes-vous sûr de vous déconnecter?"
+
+            );
+            if(confirmation==0){
+                HomeView homeView =parentView.getHomeView();
+                homeView.showContent(homeView.getLoginView());
+            }
+        }else{
         setActiveSidebarItem(selectedItem);
-        showRelatedContent(sidebarItems.indexOf(selectedItem));
+        showRelatedContent(sidebarItems.indexOf(selectedItem));}
 
     }
 

@@ -2,10 +2,14 @@ package com.mst.java.mini.projet.usf.elm.core.models;
 
 import java.sql.SQLException;
 
-abstract public class User {
 
-    abstract public void create() throws SQLException, ClassNotFoundException;
-    abstract public void get() throws SQLException;
-    abstract public void delete() throws SQLException;
-    abstract public void update() throws SQLException;
+/**
+ * the base user interface
+ * This contains the shared User methods between Client and Admin classes
+ */
+ public interface User {
+    void create() throws SQLException, ClassNotFoundException;
+    void get() throws SQLException;
+    void delete() throws SQLException;
+    void update() throws SQLException;
 }

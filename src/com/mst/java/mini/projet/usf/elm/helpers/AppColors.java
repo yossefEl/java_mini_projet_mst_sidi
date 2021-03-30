@@ -1,6 +1,11 @@
 package com.mst.java.mini.projet.usf.elm.helpers;
 import java.awt.Color;
 
+/**
+ * Contains the color palette of this application
+ * You can change any color from here and the changes will affect all the view
+ * that uses the color you changed
+ */
 public class AppColors {
     //the blue color of FSTE logo
     public static final Color blueColor=new Color(16,121,154);

@@ -3,6 +3,11 @@ package com.mst.java.mini.projet.usf.elm.helpers;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * This class handles the dialogs to show if case success/ error /confirmation
+ * This is useful when the developer decides to change the view of the dialogs
+ */
 public class DialogHelper {
     public static void showErrorMessage(Component parent, String message) {
         final JLabel messageLabel = new JLabel("<html><div style='width:300px'>" + message + "</div></html>", SwingConstants.LEFT);

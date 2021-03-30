@@ -19,6 +19,7 @@ public class DashboardView extends JPanel {
     private AddClientView addClientView;
     private UpdateDeleteClientView updateDeleteClientView;
     private ShowClientsView showClientsView;
+    private HomeView homeView;
 
     public DashboardView(AddClientView addClientView,
                          UpdateDeleteClientView updateDeleteClientView,
@@ -28,7 +29,6 @@ public class DashboardView extends JPanel {
         this.showClientsView = showClientsView;
         buildView();
     }
-
 
 
     private void buildView() {
@@ -58,6 +58,9 @@ public class DashboardView extends JPanel {
     }
 
 
+    /**
+     * Init the Sidebar menu elements by setting a mouse click action listener
+     */
     void initializeSidebarItemsListeners() {
         for (SidebarItem item : sidebar.sidebarItems
         ) {
@@ -70,8 +73,7 @@ public class DashboardView extends JPanel {
     }
 
 
-
-    //getters
+    //getters //setters
 
     public Sidebar getSidebar() {
         return sidebar;
@@ -85,28 +87,32 @@ public class DashboardView extends JPanel {
         return addClientView;
     }
 
+    public void setAddClientView(AddClientView addClientView) {
+        this.addClientView = addClientView;
+    }
+
     public UpdateDeleteClientView getUpdateDeleteClientView() {
         return updateDeleteClientView;
+    }
+
+    public void setUpdateDeleteClientView(UpdateDeleteClientView updateDeleteClientView) {
+        this.updateDeleteClientView = updateDeleteClientView;
     }
 
     public ShowClientsView getShowClientsView() {
         return showClientsView;
     }
 
-    //setters
-
-    public void setUpdateDeleteClientView(UpdateDeleteClientView updateDeleteClientView) {
-        this.updateDeleteClientView = updateDeleteClientView;
-    }
-
-
     public void setShowClientsView(ShowClientsView showClientsView) {
         this.showClientsView = showClientsView;
     }
 
+    public HomeView getHomeView() {
+        return homeView;
+    }
 
-    public void setAddClientView(AddClientView addClientView) {
-        this.addClientView = addClientView;
+    public void setHomeView(HomeView homeView) {
+        this.homeView = homeView;
     }
 
 

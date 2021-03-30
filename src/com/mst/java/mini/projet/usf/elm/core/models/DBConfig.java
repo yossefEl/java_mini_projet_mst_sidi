@@ -40,7 +40,7 @@ public class DBConfig {
 
     public void setServerAdr(String _serverAdr) {
         this.serverAdr = cleanUpServerName(_serverAdr);
-        System.out.println(getServerAdr());
+
 
     }
 

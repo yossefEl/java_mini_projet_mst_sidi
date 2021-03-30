@@ -1,48 +1,41 @@
 package com.mst.java.mini.projet.usf.elm.core.views;
 
-import com.mst.java.mini.projet.usf.elm.helpers.DBHelper;
-import com.mst.java.mini.projet.usf.elm.core.models.DBConfig;
-import com.mst.java.mini.projet.usf.elm.core.views.components.PrimaryButton;
 import com.mst.java.mini.projet.usf.elm.core.views.components.InputField;
 import com.mst.java.mini.projet.usf.elm.core.views.components.InputLabel;
+import com.mst.java.mini.projet.usf.elm.core.views.components.PrimaryButton;
 import com.mst.java.mini.projet.usf.elm.core.views.components.TitleLabel;
 import com.mst.java.mini.projet.usf.elm.helpers.AppColors;
 import com.mst.java.mini.projet.usf.elm.helpers.AssetsProvider;
-import com.mst.java.mini.projet.usf.elm.helpers.DialogHelper;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.TimeUnit;
 
-public class ConfigureDatabaseView extends JPanel implements ActionListener {
+public class ConfigureDatabaseView extends JPanel {
 
-    JLabel appLogo;
-    JLabel appLabel;
-    JLabel loadingLabel;
-    JLabel serverAddressLabel;
-    JTextField serverAddressField;
-    JLabel dbNameLabel;
-    JTextField dbNameField;
-    JLabel tableNameLabel;
-    JTextField tableNameField;
-    JLabel dbUsernameLabel;
-    JTextField dbUsernameField;
-    JLabel dbPasswordLabel;
-    JTextField dbPasswordField;
-    JButton saveConfigsButton;
+    private JLabel appLogo;
+    private JLabel appLabel;
+    private JLabel loadingLabel;
+    private JLabel serverAddressLabel;
+    private JTextField serverAddressField;
+    private JLabel dbNameLabel;
+    private JTextField dbNameField;
+    private JLabel tableNameLabel;
+    private JTextField tableNameField;
+    private JLabel dbUsernameLabel;
+    private JTextField dbUsernameField;
+    private JLabel dbPasswordLabel;
+    private JTextField dbPasswordField;
+    private JButton saveConfigsButton;
 
 
     /// controllers
 
-    DBHelper databaseHelper;
-    HomeView parent;
 
     public ConfigureDatabaseView() {
-        databaseHelper = new DBHelper();
+
         buildView();
-        System.out.println("Im shown");
+
     }
 
     private void buildView() {
@@ -78,9 +71,9 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
         saveConfigsButton = new PrimaryButton("Terminer",
                 new Rectangle(210, 424, 394, 35),
                 AppColors.blueColor);
-        saveConfigsButton.addActionListener(this);
 
-        loadingLabel = new JLabel(AssetsProvider.loadingImage45,SwingConstants.CENTER);
+
+        loadingLabel = new JLabel(AssetsProvider.loadingImage45, SwingConstants.CENTER);
         loadingLabel.setBounds(210, 424, 394, 45);
         loadingLabel.setVisible(false);
 
@@ -108,69 +101,50 @@ public class ConfigureDatabaseView extends JPanel implements ActionListener {
 
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Terminer")) {
-            onSaveConfigurations();
-        }
-    }
-
-    private void onSaveConfigurations() {
-        handleSavingLoadingAnimation(true);
-
-        final DBConfig databaseConfig = new DBConfig(
-                serverAddressField.getText(),
-                dbNameField.getText(),
-                tableNameField.getText(),
-                dbUsernameField.getText(),
-                dbPasswordField.getText()
-
-        );
-
-        if (databaseConfig.hasEssentialConfigurations()) {
-            DialogHelper.showErrorMessage(this, "Erreur");
-        } else {
-            databaseHelper.setDatabaseConfig(databaseConfig);
-            try {
-                boolean configsSaved = databaseHelper.getDatabaseConfig().saveConfiguration();
-                //switch to HomeView
-                if (configsSaved) {
-                    if (databaseHelper.isDatabaseConfigured()) {
-                        try {
-                            TimeUnit.SECONDS.sleep(1);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        handleSavingLoadingAnimation(false);
-
-                         parent = (HomeView) SwingUtilities.getWindowAncestor(this);
-                        parent.showContent(parent.getLoginView());
-                        parent.repaint();
-                    }
-                } else {
-                    DialogHelper.showErrorMessage(this, "Oops ! Une erreur inattendue s'est produite lors de la tentative d'enregistrement des configurations de la base de données. Veuillez réessayer!");
-                }
-            } catch (Exception e) {
-                DialogHelper.showErrorMessage(this, e.getMessage());
-            }
-
-        }
-
-        handleSavingLoadingAnimation(false);
-
+    /**
+     * add an action listeners to the save configurations button
+     *
+     * @param listener OnSaveConfigActionListener
+     */
+    public void addOnSaveConfigActionListener(ActionListener listener) {
+        saveConfigsButton.addActionListener(listener);
     }
 
 
-    //this methods is just for showing a loading animation to the save configs button
-    //This is good for not confusing the user and letting them that the program is in progress
-    private void handleSavingLoadingAnimation(boolean isLoading) {
-        if (isLoading) {
-            saveConfigsButton.setVisible(false);
-            loadingLabel.setVisible(true);
-        } else {
-            saveConfigsButton.setVisible(true);
-            loadingLabel.setVisible(false);
-        }
 
+    //getters and setters
+
+    public JLabel getLoadingLabel() {
+        return loadingLabel;
     }
+
+    public String getServerAddress() {
+        return serverAddressField.getText();
+    }
+
+
+    public String getDBName() {
+        return dbNameField.getText();
+    }
+
+
+    public String getTableName() {
+        return tableNameField.getText();
+    }
+
+
+    public String getDbUsername() {
+        return dbUsernameField.getText();
+    }
+
+
+    public String getDbPassword() {
+        return dbPasswordField.getText();
+    }
+
+    public JButton getSaveConfigsButton() {
+        return saveConfigsButton;
+    }
+
+
 }

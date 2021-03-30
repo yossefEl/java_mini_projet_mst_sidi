@@ -7,9 +7,14 @@ import com.mst.java.mini.projet.usf.elm.core.views.ShowClientsView;
 import com.mst.java.mini.projet.usf.elm.core.views.UpdateDeleteClientView;
 import com.mst.java.mini.projet.usf.elm.helpers.DialogHelper;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ClientController {
     private final AddClientView addClientView;
@@ -23,6 +28,11 @@ public class ClientController {
         addClientView = dashboardView.getAddClientView();
         updateDeleteClientView = dashboardView.getUpdateDeleteClientView();
         showClientsView = dashboardView.getShowClientsView();
+        showClientsView.addComponentListener(new ComponentAdapter() {
+            public void componentShown(ComponentEvent e) {
+                loadClientsIntoTable();
+            }
+        });
 
         addClientView.addClientActionListener(new ClientActionListener());
         updateDeleteClientView.addClientActionListener(new ClientActionListener());
@@ -30,6 +40,7 @@ public class ClientController {
 
 
     }
+
 
     /**
      * This method will be invoked only when the user clicks the [Ajouter] button in
@@ -47,7 +58,7 @@ public class ClientController {
                 addClientView.getClientAddress()
         );
 
-        System.out.println(client.toString());
+
         if (client.validate()) {
             if (!client.existInDatabase()) {
                 final int confirmation = DialogHelper.showConfirmationDialog(addClientView,
@@ -87,6 +98,9 @@ public class ClientController {
     }
 
 
+    /**
+     * Searches the user in the database using his identifier (Number)
+     */
     public void searchUserByID() {
 
 
@@ -97,14 +111,19 @@ public class ClientController {
             DialogHelper.showErrorMessage(updateDeleteClientView, "L'identifiant n'est pas spécifié", "Veuillez saisir l'identifiant d'un client et réessayer");
         } else {
             try {
-                client.get();
-                updateDeleteClientView.setClientNumber(client.getId());
-                updateDeleteClientView.setClientFirstName(client.getFirstName());
-                updateDeleteClientView.setClientLastName(client.getLastName());
-                updateDeleteClientView.setClientBirthday(client.getBirthday());
-                updateDeleteClientView.setClientAddress(client.getAddress());
+                if (client.existInDatabase()) {
+                    client.get();
+                    updateDeleteClientView.setClientNumber(client.getId());
+                    updateDeleteClientView.setClientFirstName(client.getFirstName());
+                    updateDeleteClientView.setClientLastName(client.getLastName());
+                    updateDeleteClientView.setClientBirthday(client.getBirthday());
+                    updateDeleteClientView.setClientAddress(client.getAddress());
+                } else {
+                    JOptionPane.showMessageDialog(updateDeleteClientView, "Il n'existe aucun client avec l'identifiant entré!", "Client inexiste", JOptionPane.INFORMATION_MESSAGE);
 
-            } catch (SQLException exception) {
+                }
+
+            } catch (Exception exception) {
                 DialogHelper.showErrorMessage(updateDeleteClientView, "Oups, quelque chose s'est mal passé:\n" + exception.getMessage());
             }
         }
@@ -113,6 +132,10 @@ public class ClientController {
     }
 
 
+    /**
+     * updates the client information based on what the user entered
+     * if any error occurred, this will catch it and show it
+     */
     private void updateClient() {
         final Client client = new Client(
                 updateDeleteClientView.getClientNumber(),
@@ -122,32 +145,42 @@ public class ClientController {
                 updateDeleteClientView.getClientAddress()
         );
 
-        System.out.println(client.toString());
-        if (client.validate()) {
 
-            final int confirmation = DialogHelper.showConfirmationDialog(updateDeleteClientView,
-                    "Êtes-vous sûr de modifier ce client dans la base de données?");
-            if (confirmation == 0) {
-                try {
-                    client.update();
+        if(client.existInDatabase()){
+            if (client.validate()) {
 
-                    updateDeleteClientView.clearForm();
+                final int confirmation = DialogHelper.showConfirmationDialog(updateDeleteClientView,
+                        "Êtes-vous sûr de modifier ce client dans la base de données?");
+                if (confirmation == 0) {
+                    try {
+                        client.update();
 
-                } catch (SQLException exception) {
-                    DialogHelper.showErrorMessage(
-                            updateDeleteClientView,
-                            "Erreur est survenue",
-                            "Un problème est survenu" + exception.getMessage()
-                    );
-                    exception.printStackTrace();
+                        updateDeleteClientView.clearForm();
+
+                    } catch (SQLException exception) {
+                        DialogHelper.showErrorMessage(
+                                updateDeleteClientView,
+                                "Erreur est survenue",
+                                "Un problème est survenu" + exception.getMessage()
+                        );
+                        exception.printStackTrace();
+                    }
                 }
-            }
 
-        } else {
+            } else {
+                DialogHelper.showErrorMessage(
+                        updateDeleteClientView,
+                        "Informations invalide",
+                        "Veuillez saisir toutes les informations sur le client pour continuer!"
+
+                );
+
+            }
+        }else {
             DialogHelper.showErrorMessage(
                     updateDeleteClientView,
-                    "Informations invalide",
-                    "Veuillez saisir toutes les informations sur le client pour continuer!"
+                    "Client n'existe pas",
+                    "Veuillez vous assurer que vous avez sélectionné un identifiant client approprié et réessayer"
 
             );
 
@@ -155,9 +188,38 @@ public class ClientController {
     }
 
 
+    /**
+     * This method deletes the user from the database
+     */
     private void deleteClient() {
-    }
+        final int confirmValue = DialogHelper.showConfirmationDialog(
+                updateDeleteClientView,
+                "Êtes-vous sûr de vouloir supprimer ce client?"
+        );
+        if (confirmValue == 0) {
+            final Client client = new Client();
+            client.setId(updateDeleteClientView.getClientNumber());
+            try {
 
+                client.delete();
+                updateDeleteClientView.clearForm();
+                JOptionPane.showMessageDialog(
+                        updateDeleteClientView,
+                        "le client a bien été supprimé!",
+                        "Suppression du client",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+
+            } catch (SQLException exception) {
+                DialogHelper.showErrorMessage(
+                        updateDeleteClientView,
+                        "Erreur est survenue",
+                        "Un problème est survenu:\n" + exception.getMessage()
+                );
+            }
+        }
+
+    }
 
 
     /**
@@ -175,6 +237,41 @@ public class ClientController {
     }
 
 
+    private void loadClientsIntoTable() {
+
+        try {
+            ArrayList<Client> clients = Client.all();
+            DefaultTableModel tableModel = showClientsView.getTableModel();
+//            ButtonGroup filterClientsCheckGroup = showClientsView.getFilterClientsCheckGroup();
+            tableModel.getDataVector().removeAllElements();
+            for (Client client : clients
+            ) {
+                tableModel.addRow(new Object[]{client.getId(),
+                        client.getFirstName(),
+                        client.getLastName(),
+                        client.getBirthday(),
+                        client.getAddress()});
+            }
+
+
+        } catch (SQLException exception) {
+            DialogHelper.showErrorMessage(
+                    updateDeleteClientView,
+                    "Erreur est survenue",
+                    "Un problème est survenu:\n" + exception.getMessage()
+            );
+        }
+
+    }
+
+    private void sortClientsList() {
+
+
+    }
+
+    /**
+     * The action listener for the Client CRUD views
+     */
     private class ClientActionListener implements ActionListener {
 
         @Override
@@ -184,24 +281,21 @@ public class ClientController {
             ///
             if (addClientView.getAddClientButton().equals(source)) {
                 addClient();
-            }
-            if (addClientView.getCancelButton().equals(source)) {
+            } else if (addClientView.getCancelButton().equals(source)) {
                 clearAddClientViewForm();
-            }
-            if (updateDeleteClientView.getSearchButton().equals(source)) {
+            } else if (updateDeleteClientView.getSearchButton().equals(source)) {
                 searchUserByID();
-            }
-            if (updateDeleteClientView.getUpdateClientButton().equals(source)) {
+            } else if (updateDeleteClientView.getUpdateClientButton().equals(source)) {
                 updateClient();
-            }
-            if (updateDeleteClientView.getDeleteButton().equals(source)) {
-               deleteClient();
+            } else if (updateDeleteClientView.getDeleteButton().equals(source)) {
+                deleteClient();
+            } else if (showClientsView.getRefreshFilteredClientsListButton().equals(source)) {
+                sortClientsList();
             }
 
 
         }
     }
-
 
 
 }

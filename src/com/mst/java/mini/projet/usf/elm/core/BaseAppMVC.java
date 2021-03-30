@@ -1,11 +1,18 @@
-package com.mst.java.mini.projet.usf.elm.core.controllers;
+package com.mst.java.mini.projet.usf.elm.core;
 
+import com.mst.java.mini.projet.usf.elm.core.controllers.AuthController;
+import com.mst.java.mini.projet.usf.elm.core.controllers.ClientController;
+import com.mst.java.mini.projet.usf.elm.core.controllers.DBConfigController;
 import com.mst.java.mini.projet.usf.elm.core.views.*;
 import com.mst.java.mini.projet.usf.elm.helpers.DBHelper;
 import com.mst.java.mini.projet.usf.elm.helpers.DialogHelper;
 
 import java.sql.SQLException;
 
+/**
+ * Assembles all the controllers and views together
+ * This is the entry point to the application
+ */
 public class BaseAppMVC {
     // //************* Home ************* //
     private final HomeView homeView;
@@ -14,6 +21,7 @@ public class BaseAppMVC {
     // //************* Database  ************* //
     private final ConfigureDatabaseView configureDatabaseView;
     private final DBHelper dbHelper;
+    private DBConfigController dbConfigController;
 
 
     //************* Authentication ************* //
@@ -30,6 +38,7 @@ public class BaseAppMVC {
     private ShowClientsView showClientsView;
 
 
+
     public BaseAppMVC() {
         //************* Client CRUD (Create | Read | Update | Delete) ************* //
         addClientView = new AddClientView();
@@ -44,14 +53,16 @@ public class BaseAppMVC {
         // //************* Database  ************* //
 
         configureDatabaseView = new ConfigureDatabaseView();
+        dbConfigController=new DBConfigController(configureDatabaseView);
 
 
         // //************* Home ************* //
         homeView = new HomeView(dashboardView, loginView, configureDatabaseView);
 
-        //auth controller
+        //Controller set home view
 
         authController.setHomeView(homeView);
+        dbConfigController.setHomeView(homeView);
 
         //creating a database helper instance
         dbHelper = new DBHelper();
@@ -59,6 +70,14 @@ public class BaseAppMVC {
     }
 
 
+    /**
+     * Starts the app and decides which view to show, it shows :
+     *  Configuration view: if the database configurations not set or not valid
+     *  else: it shows:
+     *  Login view if the Admin is not authenticated
+     *  otherwise it pushes the Dashboard View to the front
+     *
+     */
     public void start() {
         try {
             if (dbHelper.isDatabaseConfigured()) {

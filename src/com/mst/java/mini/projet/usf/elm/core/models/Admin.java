@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Admin extends User {
+public class Admin implements User {
 
 
     DBHelper dbHelper;
@@ -34,7 +34,7 @@ public class Admin extends User {
     }
 
 
-    //-------- setters and gettters -------
+    //-------- setters and getters -------
 
 
     public void setUsername(String username) {
@@ -97,7 +97,7 @@ public class Admin extends User {
         Statement statement = connection.createStatement();
         resultSet = statement.executeQuery(query);
         if (resultSet.next()) {
-            System.out.println("hello");
+
             setLogged(true);
             return true;
         }

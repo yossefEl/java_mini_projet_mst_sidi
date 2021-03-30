@@ -6,12 +6,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Objects;
 
-public class Client extends User {
+public class Client implements User {
 
     //---------- attributes ---------
-    private DBHelper dbHelper;
+    private final DBHelper dbHelper;
     private String id;
     private String firstName;
     private String lastName;
@@ -37,6 +38,33 @@ public class Client extends User {
     //---------- methods ---------
 
     /**
+     * this method is for getting all the clients stored in the database -> clients table
+     *
+     * @return List of Clients
+     */
+    public static ArrayList<Client> all() throws SQLException {
+        DBHelper dbHelper = new DBHelper();
+        ArrayList<Client> clients = new ArrayList<>();
+        dbHelper.connectToDatabase();
+        Connection connection = dbHelper.getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet results = statement.executeQuery(
+                "SELECT * FROM " + dbHelper.getDatabaseConfig().getTableName() );
+
+        while (results.next()) {
+            Client client = new Client();
+            client.setId(results.getString(1));
+            client.setFirstName(results.getString(2));
+            client.setLastName(results.getString(3));
+            client.setBirthday(results.getString(4));
+            client.setAddress(results.getString(5));
+            clients.add(client);
+        }
+        dbHelper.closeConnection();
+        return clients;
+    }
+
+    /**
      * inserts the client's data into database
      *
      * @throws SQLException           if an error occurred during inserting data into database
@@ -54,6 +82,11 @@ public class Client extends User {
 
     }
 
+    /**
+     * It gets the Client from the database by its identifier
+     * and setts the new values to its attributes
+     * @throws SQLException in case of SQL syntax error if the datbase not connected...etc
+     */
     @Override
     public void get() throws SQLException {
         dbHelper.connectToDatabase();
@@ -80,11 +113,11 @@ public class Client extends User {
      */
     @Override
     public void delete() throws SQLException {
+        dbHelper.connectToDatabase();
         Connection connection = dbHelper.getConnection();
         Statement statement = connection.createStatement();
         statement.executeUpdate(
-                "INSERT INTO clients(id, nom, prenom, date_naiss, adresse) " +
-                        "VALUES ('" + id + "','" + firstName + "','" + lastName + "','" + birthday + "','" + address + "')");
+                "DELETE FROM clients where id=" + id);
         dbHelper.closeConnection();
     }
 
@@ -103,7 +136,6 @@ public class Client extends User {
         statement.executeUpdate("UPDATE clients SET   nom='" + firstName + "', prenom='" + lastName + "', date_naiss='" + birthday + "', adresse='" + address + "' where id='" + id + "'");
         dbHelper.closeConnection();
     }
-
 
     /**
      * @return true if the values of this client instance are valid [isBlackOrNull for each is false]
@@ -135,6 +167,12 @@ public class Client extends User {
     }
 
 
+    /**
+     *
+     * Checks the existence of the client in the database using its identifier
+     * @return true if current Client exist in the database
+     * otherwise it returns false
+     */
     public boolean existInDatabase() {
 
         try {
@@ -158,6 +196,7 @@ public class Client extends User {
 
 
     }
+
 
     @Override
     public String toString() {

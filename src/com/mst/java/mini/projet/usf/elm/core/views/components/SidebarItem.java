@@ -49,6 +49,9 @@ public class SidebarItem extends JPanel {
         this.itemLabelText = itemLabelText;
     }
 
+    public String getItemLabelText() {
+        return itemLabelText;
+    }
 
     public void setIsView(boolean isView) {
         this.isView = isView;
