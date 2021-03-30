@@ -171,6 +171,7 @@ public class DBConfig {
                 }
                 //initializes the variables/attributes s
                 fromArray(configs);
+                bufferedReader.close();
             } catch (IOException e) {
                 throw (new Exception("Erreur survenue lors de la lecture du fichier: \n" + e.getMessage()));
             }
