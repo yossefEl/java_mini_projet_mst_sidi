@@ -3,6 +3,7 @@ package com.mst.java.mini.projet.usf.elm.core;
 import com.mst.java.mini.projet.usf.elm.core.controllers.AuthController;
 import com.mst.java.mini.projet.usf.elm.core.controllers.ClientController;
 import com.mst.java.mini.projet.usf.elm.core.controllers.DBConfigController;
+import com.mst.java.mini.projet.usf.elm.core.controllers.SidebarController;
 import com.mst.java.mini.projet.usf.elm.core.views.*;
 import com.mst.java.mini.projet.usf.elm.helpers.DBHelper;
 import com.mst.java.mini.projet.usf.elm.helpers.DialogHelper;
@@ -21,22 +22,18 @@ public class BaseAppMVC {
     // //************* Database  ************* //
     private final ConfigureDatabaseView configureDatabaseView;
     private final DBHelper dbHelper;
-    private DBConfigController dbConfigController;
-
-
     //************* Authentication ************* //
     private final LoginView loginView;
     private final AuthController authController;
-
-
+    private final DashboardView dashboardView;
+    private DBConfigController dbConfigController;
     //************* Client CRUD (Create | Read | Update | Delete) ************* //
     private ClientController clientController;
-    private final DashboardView dashboardView;
     //dashboard items
     private AddClientView addClientView;
     private UpdateDeleteClientView updateDeleteClientView;
     private ShowClientsView showClientsView;
-
+    private SidebarController sidebarController;
 
 
     public BaseAppMVC() {
@@ -44,8 +41,14 @@ public class BaseAppMVC {
         addClientView = new AddClientView();
         updateDeleteClientView = new UpdateDeleteClientView();
         showClientsView = new ShowClientsView();
-        dashboardView = new DashboardView(addClientView, updateDeleteClientView, showClientsView);
+        sidebarController = new SidebarController();
+        dashboardView = new DashboardView(
+                addClientView,
+                updateDeleteClientView,
+                showClientsView,
+                sidebarController);
         clientController = new ClientController(dashboardView);
+
 
         //************* Authentication ************* //
         loginView = new LoginView();
@@ -53,7 +56,7 @@ public class BaseAppMVC {
         // //************* Database  ************* //
 
         configureDatabaseView = new ConfigureDatabaseView();
-        dbConfigController=new DBConfigController(configureDatabaseView);
+        dbConfigController = new DBConfigController(configureDatabaseView);
 
 
         // //************* Home ************* //
@@ -72,11 +75,10 @@ public class BaseAppMVC {
 
     /**
      * Starts the app and decides which view to show, it shows :
-     *  Configuration view: if the database configurations not set or not valid
-     *  else: it shows:
-     *  Login view if the Admin is not authenticated
-     *  otherwise it pushes the Dashboard View to the front
-     *
+     * Configuration view: if the database configurations not set or not valid
+     * else: it shows:
+     * Login view if the Admin is not authenticated
+     * otherwise it pushes the Dashboard View to the front
      */
     public void start() {
         try {

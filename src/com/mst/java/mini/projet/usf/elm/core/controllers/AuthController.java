@@ -47,6 +47,7 @@ public class AuthController {
                 admin.setPassword(String.copyValueOf(loginView.getPasswordInput()));
                 try {
                     if (admin.authenticate()) {
+                        loginView.clearForm();
                         homeView.showContent(homeView.getDashboardView());
                     } else {
                         DialogHelper.showErrorMessage(loginView,

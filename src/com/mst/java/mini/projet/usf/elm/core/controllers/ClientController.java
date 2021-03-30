@@ -9,6 +9,8 @@ import com.mst.java.mini.projet.usf.elm.helpers.DialogHelper;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -43,6 +45,20 @@ public class ClientController {
 
 
     /**
+     * @param str the string to check
+     * @return return true if the input is a set of digits else it returns false
+     */
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
+
+
+    /**
      * This method will be invoked only when the user clicks the [Ajouter] button in
      * the AddClient view
      * this method constructs a client instance from the information inputted
@@ -50,8 +66,20 @@ public class ClientController {
      * then it inserts it in the database
      */
     private void addClient() {
+
+        if(!isNumeric(addClientView.getClientNumber())){
+            DialogHelper.showErrorMessage(
+                    addClientView,
+                    "Identifiant incorrect",
+                    "L'identifiant doit être un entier!"
+
+            );
+            return;
+        }
+
+
         final Client client = new Client(
-                addClientView.getClientNumber(),
+                Integer.parseInt(addClientView.getClientNumber()),
                 addClientView.getClientFirstName(),
                 addClientView.getClientLastName(),
                 addClientView.getBirthday(),
@@ -103,13 +131,24 @@ public class ClientController {
      */
     public void searchUserByID() {
 
+        if (Client.isBlankOrNull(updateDeleteClientView.getClientNumber())) {
+            DialogHelper.showErrorMessage(updateDeleteClientView, "L'identifiant n'est pas spécifié", "Veuillez saisir l'identifiant d'un client et réessayer");
+            return;
+        }
 
-        final String clientID = updateDeleteClientView.getClientNumber();
+        if(!isNumeric(updateDeleteClientView.getClientNumber())){
+            DialogHelper.showErrorMessage(
+                    updateDeleteClientView,
+                    "Identifiant incorrect",
+                    "L'identifiant doit être un entier!"
+
+            );
+            return;
+        }
+        final int clientID = Integer.parseInt(updateDeleteClientView.getClientNumber());
         Client client = new Client();
         client.setId(clientID);
-        if (client.isBlankOrNull(clientID)) {
-            DialogHelper.showErrorMessage(updateDeleteClientView, "L'identifiant n'est pas spécifié", "Veuillez saisir l'identifiant d'un client et réessayer");
-        } else {
+
             try {
                 if (client.existInDatabase()) {
                     client.get();
@@ -126,7 +165,7 @@ public class ClientController {
             } catch (Exception exception) {
                 DialogHelper.showErrorMessage(updateDeleteClientView, "Oups, quelque chose s'est mal passé:\n" + exception.getMessage());
             }
-        }
+
 
 
     }
@@ -137,8 +176,17 @@ public class ClientController {
      * if any error occurred, this will catch it and show it
      */
     private void updateClient() {
+        if(!isNumeric(updateDeleteClientView.getClientNumber())){
+            DialogHelper.showErrorMessage(
+                    updateDeleteClientView,
+                    "Identifiant incorrect",
+                    "L'identifiant doit être un entier!"
+
+            );
+            return;
+        }
         final Client client = new Client(
-                updateDeleteClientView.getClientNumber(),
+                Integer.parseInt(updateDeleteClientView.getClientNumber()),
                 updateDeleteClientView.getClientFirstName(),
                 updateDeleteClientView.getClientLastName(),
                 updateDeleteClientView.getBirthday(),
@@ -146,7 +194,7 @@ public class ClientController {
         );
 
 
-        if(client.existInDatabase()){
+        if (client.existInDatabase()) {
             if (client.validate()) {
 
                 final int confirmation = DialogHelper.showConfirmationDialog(updateDeleteClientView,
@@ -156,6 +204,10 @@ public class ClientController {
                         client.update();
 
                         updateDeleteClientView.clearForm();
+                        JLabel successMessage = new JLabel("Le client a été mis à jour avec succès", SwingConstants.LEFT);
+                        successMessage.setVisible(true);
+                        JOptionPane.showMessageDialog(updateDeleteClientView,successMessage,"Succès",JOptionPane.PLAIN_MESSAGE);
+
 
                     } catch (SQLException exception) {
                         DialogHelper.showErrorMessage(
@@ -176,7 +228,7 @@ public class ClientController {
                 );
 
             }
-        }else {
+        } else {
             DialogHelper.showErrorMessage(
                     updateDeleteClientView,
                     "Client n'existe pas",
@@ -192,13 +244,22 @@ public class ClientController {
      * This method deletes the user from the database
      */
     private void deleteClient() {
+        if(!isNumeric(updateDeleteClientView.getClientNumber())){
+            DialogHelper.showErrorMessage(
+                    updateDeleteClientView,
+                    "Identifiant incorrect",
+                    "L'identifiant doit être un entier!"
+
+            );
+            return;
+        }
         final int confirmValue = DialogHelper.showConfirmationDialog(
                 updateDeleteClientView,
                 "Êtes-vous sûr de vouloir supprimer ce client?"
         );
         if (confirmValue == 0) {
             final Client client = new Client();
-            client.setId(updateDeleteClientView.getClientNumber());
+            client.setId(Integer.parseInt(updateDeleteClientView.getClientNumber()));
             try {
 
                 client.delete();
@@ -242,11 +303,14 @@ public class ClientController {
         try {
             ArrayList<Client> clients = Client.all();
             DefaultTableModel tableModel = showClientsView.getTableModel();
-//            ButtonGroup filterClientsCheckGroup = showClientsView.getFilterClientsCheckGroup();
-            tableModel.getDataVector().removeAllElements();
+            tableModel.setRowCount(0);
+            showClientsView.getTable().setRowSorter(null);
+            tableModel.fireTableDataChanged();
+
             for (Client client : clients
             ) {
-                tableModel.addRow(new Object[]{client.getId(),
+                tableModel.addRow(new Object[]{
+                        client.getId(),
                         client.getFirstName(),
                         client.getLastName(),
                         client.getBirthday(),
@@ -264,9 +328,19 @@ public class ClientController {
 
     }
 
-    private void sortClientsList() {
-
-
+    /**
+     * sort the table based on the column selected [Num,Nom,Date Naissance]
+     *
+     * @param columnIndex the column index of the table in the ShowCLientsView
+     */
+    private void sortClientsListBy(int columnIndex) {
+        final JTable table = showClientsView.getTable();
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(showClientsView.getTableModel());
+        // Classify
+        table.setRowSorter(sorter);
+        java.util.List<RowSorter.SortKey> sortList = new ArrayList<>();
+        sortList.add(new RowSorter.SortKey(columnIndex, SortOrder.ASCENDING));
+        sorter.setSortKeys(sortList);
     }
 
     /**
@@ -289,13 +363,26 @@ public class ClientController {
                 updateClient();
             } else if (updateDeleteClientView.getDeleteButton().equals(source)) {
                 deleteClient();
-            } else if (showClientsView.getRefreshFilteredClientsListButton().equals(source)) {
-                sortClientsList();
+            } else if (showClientsView.getRefreshClientsListButton().equals(source)) {
+                showClientsView.getSortClientsCheckGroup().clearSelection();
+                loadClientsIntoTable();
+            } else if (showClientsView.getSortByID().equals(source)) {
+            //the index of the Column 'Numero' in the table is 0
+                sortClientsListBy(0);
+            } else if (showClientsView.getSortByName().equals(source)) {
+                //the index of the Column 'Numero' in the table is 1
+                sortClientsListBy(1);
+            } else if (showClientsView.getSortByBirthday().equals(source)) {
+                //the index of the Column 'Date Naissane' in the table is 3
+                sortClientsListBy(3);
             }
 
 
         }
     }
+
+
+
 
 
 }

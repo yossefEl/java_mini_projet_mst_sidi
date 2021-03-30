@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class DBHelper {
 
     //------------- attributes -------------
-    private DBConfig databaseConfig;
+    private static DBConfig databaseConfig;
     private Connection connection;
 
 
@@ -23,7 +23,7 @@ public class DBHelper {
         try {
             databaseConfig.readConfiguration();
         } catch (Exception e) {
-
+            //System.out.println("Impossible de lire la configuration!");
         }
     }
 
@@ -34,7 +34,7 @@ public class DBHelper {
     }
 
     public void setDatabaseConfig(DBConfig databaseConfig) {
-        this.databaseConfig = databaseConfig;
+        DBHelper.databaseConfig = databaseConfig;
     }
 
     public Connection getConnection() {
@@ -50,7 +50,7 @@ public class DBHelper {
     public boolean isDatabaseConfigured() throws SQLException, ClassNotFoundException {
         //checking the existence of the configuration file
         if (!AssetsProvider.dbConfigFile.exists()) {
-            System.out.println("Files doesn't exist ");
+            //System.out.println("Files doesn't exist ");
             return false;
         } else {
             // in case the file exists then
@@ -58,7 +58,7 @@ public class DBHelper {
             try {
                 databaseConfig.readConfiguration();
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                //System.out.println(e.getMessage());
                 e.printStackTrace();
                 return false;
             }
@@ -72,7 +72,15 @@ public class DBHelper {
     public boolean connectToDatabase() {
 
         //if no configurations found
+
         if (databaseConfig == null) return false;
+//        if(!databaseConfig.hasEssentialConfigurations()) {
+//            try {
+//                databaseConfig.readConfiguration();
+//            } catch (Exception e) {
+//                DialogHelper.showErrorMessage(null, "Une erreur s'est produite lors de la tentative de connexion à la base de données :\n" + e.getMessage());
+//            }
+//        }
 
         //else
         try {
@@ -85,7 +93,7 @@ public class DBHelper {
                 return true;
             }
         } catch (Exception e) {
-            System.out.println("error: " + e.getMessage());
+            //System.out.println("error: " + e.getMessage());
             DialogHelper.showErrorMessage(null, "Une erreur s'est produite lors de la tentative de connexion à la base de données :\n" + e.getMessage());
         }
 

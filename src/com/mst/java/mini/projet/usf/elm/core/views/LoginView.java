@@ -88,4 +88,9 @@ public class LoginView extends JPanel {
         loginButton.addActionListener(listener);
 
     }
+
+    public void clearForm() {
+        usernameField.setText("");
+        passwordField.setText("");
+    }
 }

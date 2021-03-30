@@ -7,6 +7,7 @@ import com.mst.java.mini.projet.usf.elm.helpers.AppColors;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
@@ -14,13 +15,13 @@ import java.awt.event.ActionListener;
 
 public class ShowClientsView extends MainDashboardContentArea {
 
-    PrimaryButton refreshFilteredClientsListButton;
+    PrimaryButton refreshClientsListButton;
     private DefaultTableModel tableModel;
     private JTable table;
-    private JRadioButton filterByID;
-    private JRadioButton filterByName;
-    private JRadioButton filterByBirthday;
-    private ButtonGroup filterClientsCheckGroup;
+    private JRadioButton sortByID;
+    private JRadioButton sortByName;
+    private JRadioButton sortByBirthday;
+    private ButtonGroup sortClientsCheckGroup;
 
     public ShowClientsView() {
         buildView();
@@ -31,39 +32,55 @@ public class ShowClientsView extends MainDashboardContentArea {
 
         title = new DashAreaTitle(new Rectangle(224, 26, 300, 17), "Afficher Les clients");
 
-        JPanel filtersContainer = new JPanel(new FlowLayout());
-        filtersContainer.setBounds(23, 72, getWidth(), 35);
-        filtersContainer.setBackground(AppColors.whiteColor);
+        JPanel sortsContainer = new JPanel(new FlowLayout());
+        sortsContainer.setBounds(23, 72, getWidth(), 35);
+        sortsContainer.setBackground(AppColors.whiteColor);
 
         JLabel sortLabel = new JLabel("Trier par: ");
         sortLabel.setFont(new Font("Arial", Font.BOLD, 18));
         sortLabel.setForeground(AppColors.blueColor);
 
-        filterByID = new JRadioButton("Num", false);
-        filterByName = new JRadioButton("Nom", false);
-        filterByBirthday = new JRadioButton("Date naissance", false);
+        sortByID = new JRadioButton("Num", false);
+        sortByName = new JRadioButton("Nom", false);
+        sortByBirthday = new JRadioButton("Date naissance", false);
 
-        refreshFilteredClientsListButton = new PrimaryButton("Actualiser",
+        refreshClientsListButton = new PrimaryButton("Actualiser",
                 new Rectangle(0, 0, 126, 35),
                 AppColors.orangeColor
         );
 
-        filterClientsCheckGroup = new ButtonGroup();
+        sortClientsCheckGroup = new ButtonGroup();
 
-        filterClientsCheckGroup.add(filterByID);
-        filterClientsCheckGroup.add(filterByName);
-        filterClientsCheckGroup.add(filterByBirthday);
+        sortClientsCheckGroup.add(sortByID);
+        sortClientsCheckGroup.add(sortByName);
+        sortClientsCheckGroup.add(sortByBirthday);
 
-        filtersContainer.add(sortLabel);
-        filtersContainer.add(filterByID);
-        filtersContainer.add(filterByName);
-        filtersContainer.add(filterByBirthday);
-        filtersContainer.add(refreshFilteredClientsListButton);
+        sortsContainer.add(sortLabel);
+        sortsContainer.add(sortByID);
+        sortsContainer.add(sortByName);
+        sortsContainer.add(sortByBirthday);
+        sortsContainer.add(refreshClientsListButton);
 
 
         String[] columnNames = new String[]{"Numero", "Nom", "Prénom", "Date de naissance", "Adresse"};
-        tableModel = new DefaultTableModel(columnNames, 0);
+        tableModel = new DefaultTableModel(columnNames, 0)  {
+            @Override
+            public Class getColumnClass(int column) {
+                if (column == 0) {
+                    return Integer.class;
+                }
+                return String.class;
+            }
+        };
+
+
+
         table = new JTable(tableModel);
+        table.setAutoCreateRowSorter(true);
+
+        DefaultTableCellRenderer NumberLeftRenderer = new DefaultTableCellRenderer();
+        NumberLeftRenderer.setHorizontalAlignment(JLabel.LEFT);
+        table.getColumnModel().getColumn(0).setCellRenderer(NumberLeftRenderer);
 
         JTableHeader tableHeader = table.getTableHeader();
         tableHeader.setBackground(AppColors.darkGreyColor);
@@ -77,7 +94,7 @@ public class ShowClientsView extends MainDashboardContentArea {
         tableScrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         add(title);
-        add(filtersContainer);
+        add(sortsContainer);
         add(tableScrollPane);
 
         setVisible(true);
@@ -91,15 +108,19 @@ public class ShowClientsView extends MainDashboardContentArea {
      * @param clientActionListener comes from the ClientController
      */
     public void addClientActionListener(ActionListener clientActionListener) {
-        refreshFilteredClientsListButton.addActionListener(clientActionListener);
+        refreshClientsListButton.addActionListener(clientActionListener);
+        sortByID.addActionListener(clientActionListener);
+        sortByName.addActionListener(clientActionListener);
+        sortByBirthday.addActionListener(clientActionListener);
+
 
     }
 
 
     //getters and setters
 
-    public PrimaryButton getRefreshFilteredClientsListButton() {
-        return refreshFilteredClientsListButton;
+    public PrimaryButton getRefreshClientsListButton() {
+        return refreshClientsListButton;
     }
 
     public DefaultTableModel getTableModel() {
@@ -110,9 +131,19 @@ public class ShowClientsView extends MainDashboardContentArea {
         return table;
     }
 
-    public ButtonGroup getFilterClientsCheckGroup() {
-        return filterClientsCheckGroup;
+    public ButtonGroup getSortClientsCheckGroup() {
+        return sortClientsCheckGroup;
     }
 
+    public JRadioButton getSortByBirthday() {
+        return sortByBirthday;
+    }
 
+    public JRadioButton getSortByID() {
+        return sortByID;
+    }
+
+    public JRadioButton getSortByName() {
+        return sortByName;
+    }
 }

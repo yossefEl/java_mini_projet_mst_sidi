@@ -13,7 +13,7 @@ public class Client implements User {
 
     //---------- attributes ---------
     private final DBHelper dbHelper;
-    private String id;
+    private int id;
     private String firstName;
     private String lastName;
     private String birthday;
@@ -26,7 +26,7 @@ public class Client implements User {
     }
 
     public Client(
-            String id, String firstName, String lastName, String birthday, String adress) {
+            int id, String firstName, String lastName, String birthday, String adress) {
 
         this.id = id;
         this.firstName = firstName;
@@ -49,11 +49,11 @@ public class Client implements User {
         Connection connection = dbHelper.getConnection();
         Statement statement = connection.createStatement();
         ResultSet results = statement.executeQuery(
-                "SELECT * FROM " + dbHelper.getDatabaseConfig().getTableName() );
+                "SELECT * FROM " + dbHelper.getDatabaseConfig().getTableName());
 
         while (results.next()) {
             Client client = new Client();
-            client.setId(results.getString(1));
+            client.setId(results.getInt(1));
             client.setFirstName(results.getString(2));
             client.setLastName(results.getString(3));
             client.setBirthday(results.getString(4));
@@ -85,6 +85,7 @@ public class Client implements User {
     /**
      * It gets the Client from the database by its identifier
      * and setts the new values to its attributes
+     *
      * @throws SQLException in case of SQL syntax error if the datbase not connected...etc
      */
     @Override
@@ -96,7 +97,7 @@ public class Client implements User {
                 "SELECT * FROM " + dbHelper.getDatabaseConfig().getTableName() + " where id=" + id);
 
         while (results.next()) {
-            setId(results.getString(1));
+            setId(results.getInt(1));
             setFirstName(results.getString(2));
             setLastName(results.getString(3));
             setBirthday(results.getString(4));
@@ -144,7 +145,7 @@ public class Client implements User {
 
 
     public boolean validate() {
-        return !isBlankOrNull(id) &&
+        return !isBlankOrNull(id == 0 ? "" : String.valueOf(id)) &&
                 !isBlankOrNull(firstName) &&
                 !isBlankOrNull(lastName) &&
                 !isBlankOrNull(birthday) &&
@@ -159,7 +160,7 @@ public class Client implements User {
      * - null
      * otherwise it returns true
      */
-    public boolean isBlankOrNull(String attribute) {
+    public static boolean isBlankOrNull(String attribute) {
         return (attribute == null ||
                 Objects.equals(attribute, "") ||
                 Objects.equals(attribute, " ") ||
@@ -168,8 +169,8 @@ public class Client implements User {
 
 
     /**
-     *
      * Checks the existence of the client in the database using its identifier
+     *
      * @return true if current Client exist in the database
      * otherwise it returns false
      */
@@ -210,11 +211,11 @@ public class Client implements User {
     }
     //---------- getters and setters ---------
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

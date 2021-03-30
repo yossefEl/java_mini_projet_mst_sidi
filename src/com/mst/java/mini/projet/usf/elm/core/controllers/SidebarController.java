@@ -18,6 +18,7 @@ public class SidebarController {
     public SidebarController() {
 
     }
+
     public SidebarController(DashboardView parentView) {
         this.parentView = parentView;
         contentAreaItems = parentView.getContentAreaItems();
@@ -43,7 +44,7 @@ public class SidebarController {
         ) {
             item.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
-                           handleSidebarSelection(item);
+                    handleSidebarSelection(item);
                 }
             });
         }
@@ -53,27 +54,29 @@ public class SidebarController {
         for (MainDashboardContentArea item : contentAreaItems
         ) {
             item.setVisible(false);
-           parentView.add(item);
+            parentView.add(item);
         }
         contentAreaItems.get(0).setVisible(true);
     }
 
 
     public void handleSidebarSelection(SidebarItem selectedItem) {
-        System.out.println(selectedItem.getItemLabelText());
-        if(selectedItem.getItemLabelText().equalsIgnoreCase("Déconnexion")){
-            final int confirmation= DialogHelper.showConfirmationDialog(
+        //System.out.println(selectedItem);
+        //Deconnexion is the latest element in the sidebar menu
+        if ((sidebarItems.size() - 1) == sidebarItems.indexOf(selectedItem)) {
+            final int confirmation = DialogHelper.showConfirmationDialog(
                     parentView,
                     "Êtes-vous sûr de vous déconnecter?"
 
             );
-            if(confirmation==0){
-                HomeView homeView =parentView.getHomeView();
+            if (confirmation == 0) {
+                HomeView homeView = parentView.getHomeView();
                 homeView.showContent(homeView.getLoginView());
             }
-        }else{
-        setActiveSidebarItem(selectedItem);
-        showRelatedContent(sidebarItems.indexOf(selectedItem));}
+        } else {
+            setActiveSidebarItem(selectedItem);
+            showRelatedContent(sidebarItems.indexOf(selectedItem));
+        }
 
     }
 
@@ -89,9 +92,9 @@ public class SidebarController {
     }
 
     private void showRelatedContent(int itemIndex) {
-        for (MainDashboardContentArea item: contentAreaItems
-             ) {
-            item.setVisible(contentAreaItems.get(itemIndex)==item);
+        for (MainDashboardContentArea item : contentAreaItems
+        ) {
+            item.setVisible(contentAreaItems.get(itemIndex) == item);
         }
 
     }

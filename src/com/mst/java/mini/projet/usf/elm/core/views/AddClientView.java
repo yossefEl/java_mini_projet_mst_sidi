@@ -170,7 +170,7 @@ public class AddClientView extends MainDashboardContentArea {
     public void showSuccessMessage() {
         JLabel successMessage = new JLabel("Le client a été enregistré avec succès", SwingConstants.LEFT);
         successMessage.setVisible(true);
-        JOptionPane.showConfirmDialog(this,successMessage,"Succès",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this,successMessage,"Succès",JOptionPane.PLAIN_MESSAGE);
 
     }
 }

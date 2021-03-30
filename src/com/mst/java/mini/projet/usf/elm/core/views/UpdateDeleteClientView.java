@@ -179,8 +179,8 @@ public class UpdateDeleteClientView extends MainDashboardContentArea {
                 dayBox.getSelectedItem() ;
     }
 
-    public void setClientNumber(String clientNumber) {
-        this.clientNumberField.setText(clientNumber);
+    public void setClientNumber(int clientNumber) {
+        this.clientNumberField.setText(String.valueOf(clientNumber));
     }
 
     public void setClientBirthday(String fullBirthday) {
@@ -198,6 +198,8 @@ public class UpdateDeleteClientView extends MainDashboardContentArea {
     public void setClientAddress(String clientAddress) {
         this.clientAddressField.setText(clientAddress);
     }
+
+
 }
 
 

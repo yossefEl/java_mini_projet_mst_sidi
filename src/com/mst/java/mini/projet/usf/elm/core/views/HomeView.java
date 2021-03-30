@@ -47,7 +47,7 @@ public class HomeView extends JFrame {
         for (JPanel item : items
         ) {
             item.setVisible(view == item);
-//            System.out.println(view.isVisible());
+//            //System.out.println(view.isVisible());
             repaint();
         }
     }

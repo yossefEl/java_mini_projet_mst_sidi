@@ -32,7 +32,7 @@ public class DialogHelper {
         return JOptionPane.showConfirmDialog(
                 parent,
                 message,
-                "Confimation",
+                "Confirmation",
 
                 JOptionPane.OK_CANCEL_OPTION
         );

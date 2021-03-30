@@ -32,7 +32,7 @@ public class PathHelper {
 
     ///returns the current project directory [the location of Main.java file]
     public static String getProjectLocation() {
-        System.out.println(System.getProperty("user.dir"));
+        //System.out.println(System.getProperty("user.dir"));
         return System.getProperty("user.dir");
     }
 

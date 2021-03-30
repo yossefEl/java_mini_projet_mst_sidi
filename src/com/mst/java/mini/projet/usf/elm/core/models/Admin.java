@@ -87,12 +87,15 @@ public class Admin implements User {
      *                      so we can show the Error message dialog
      */
     public boolean authenticate() throws Exception {
-
+        if(!dbHelper.getDatabaseConfig().hasEssentialConfigurations()) {
+            dbHelper.getDatabaseConfig().readConfiguration();
+        }
         ResultSet resultSet;
         //create a select query to check if the username and the password exist in the database
         String query = "SELECT * FROM admins WHERE login = '" + username + "' AND password ='" + password + "'";
-
+        //System.out.println(dbHelper.getDatabaseConfig().toString());
         dbHelper.connectToDatabase();
+
         Connection connection = dbHelper.getConnection();
         Statement statement = connection.createStatement();
         resultSet = statement.executeQuery(query);

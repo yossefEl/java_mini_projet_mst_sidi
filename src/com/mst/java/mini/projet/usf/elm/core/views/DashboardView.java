@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class DashboardView extends JPanel {
     private ArrayList<MainDashboardContentArea> contentAreaItems;
     private Sidebar sidebar;
-    private SidebarController sidebarController;
+    private final SidebarController sidebarController;
     private AddClientView addClientView;
     private UpdateDeleteClientView updateDeleteClientView;
     private ShowClientsView showClientsView;
@@ -23,18 +23,20 @@ public class DashboardView extends JPanel {
 
     public DashboardView(AddClientView addClientView,
                          UpdateDeleteClientView updateDeleteClientView,
-                         ShowClientsView showClientsView) {
+                         ShowClientsView showClientsView,
+                         SidebarController sidebarController) {
+//        inits the children
         this.addClientView = addClientView;
         this.updateDeleteClientView = updateDeleteClientView;
         this.showClientsView = showClientsView;
+        //init sidebar controller
+        this.sidebarController = sidebarController;
         buildView();
     }
 
 
     private void buildView() {
 
-        //init sidebar controller
-        sidebarController = new SidebarController();
 
         //init view
         setLayout(null);
@@ -50,7 +52,7 @@ public class DashboardView extends JPanel {
         add(sidebar);
         add(addClientView);
         sidebarController.initialize(this);
-        initializeSidebarItemsListeners();
+
         setSize(819, 512);
         setVisible(true);
 
@@ -58,19 +60,7 @@ public class DashboardView extends JPanel {
     }
 
 
-    /**
-     * Init the Sidebar menu elements by setting a mouse click action listener
-     */
-    void initializeSidebarItemsListeners() {
-        for (SidebarItem item : sidebar.sidebarItems
-        ) {
-            item.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    sidebarController.handleSidebarSelection(item);
-                }
-            });
-        }
-    }
+
 
 
     //getters //setters
